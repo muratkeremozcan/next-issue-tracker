@@ -19,10 +19,12 @@
     "cy:run-ct-fast": "CYPRESS_NO_COMMAND_LOG=1 yarn cy:run-ct --config video=false screenshot=false --config-file cypress/config/local.config.ts"
   },
   "dependencies": {
+    "classnames": "^2.3.2",
     "lodash": "^4.17.21",
     "next": "14.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-icons": "^4.11.0",
     "tailwindcss": "3.3.3",
     "zod": "^3.22.4"
   },
