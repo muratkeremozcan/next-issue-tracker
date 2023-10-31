@@ -1,0 +1,52 @@
+{
+  "name": "next-issue-tracker",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:open-local": "cypress open --e2e --browser chrome --config-file cypress/config/local.config.ts",
+    "cy:run-local": "cypress run --e2e --browser chrome --config-file cypress/config/local.config.ts",
+    "cy:open-dev": "cypress open --e2e --browser chrome --config-file cypress/config/dev.config.ts",
+    "cy:run-dev": "cypress run --e2e --browser chrome --config-file cypress/config/dev.config.ts",
+    "cy:open-ct": "cypress open --component --browser chrome --config-file cypress/config/local.config.ts",
+    "cy:run-ct": "cypress run --component --browser chrome --config-file cypress/config/local.config.ts",
+    "cy:run-ct-fast": "CYPRESS_NO_COMMAND_LOG=1 yarn cy:run-ct --config video=false screenshot=false --config-file cypress/config/local.config.ts"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "next": "13.5.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwindcss": "3.3.3",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@bahmutov/cy-api": "^2.2.6",
+    "@faker-js/faker": "^8.1.0",
+    "@types/lodash": "^4.14.200",
+    "@types/node": "20.6.3",
+    "@types/react": "18.2.22",
+    "@types/react-dom": "18.2.7",
+    "autoprefixer": "^10.4.16",
+    "cy-spok": "^1.6.2",
+    "cypress": "^13.4.0",
+    "cypress-map": "^1.21.1",
+    "dotenv": "^16.3.1",
+    "eslint": "8.49.0",
+    "eslint-config-next": "13.5.2",
+    "eslint-config-prettier": "9.0.0",
+    "eslint-config-react-app": "7.0.1",
+    "eslint-plugin-chai-friendly": "0.7.2",
+    "eslint-plugin-cypress": "2.15.1",
+    "eslint-plugin-no-only-tests": "3.1.0",
+    "eslint-plugin-prettier": "5.0.0",
+    "prettier": "3.0.3",
+    "typescript": "5.2.2"
+  }
+}
