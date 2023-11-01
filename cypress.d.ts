@@ -49,7 +49,7 @@ declare global {
 
       /** Gets a issue by id */
       getIssue(
-        id: number,
+        id: string,
         failOnStatusCode?: boolean,
       ): Chainable<Response<unknown> & Messages>
 
@@ -59,13 +59,13 @@ declare global {
 
       /** Deletes a issue by id */
       deleteIssue(
-        id: number,
+        id: string,
         allowedToFail?: boolean,
       ): Chainable<Response<unknown> & Messages>
 
       /** Updates a issue by id */
       updateIssue(
-        id: number,
+        id: string,
         body: Partial<Issue>,
         allowedToFail?: boolean,
       ): Chainable<Response<unknown> & Messages>

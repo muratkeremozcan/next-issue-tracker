@@ -14,7 +14,7 @@ describe('CRUD Issue', () => {
       .its('id')
       .should('exist')
       // @ts-ignore noise
-      .then((id: number) => {
+      .then((id: string) => {
         cy.getIssue(id).should(
           spok({
             status: 200,
@@ -48,7 +48,7 @@ describe('CRUD Issue', () => {
   })
 
   it('should fail to delete a issue that does not exist', () => {
-    const id = 101
+    const id = '101'
 
     cy.deleteIssue(id, true).should(spok({status: 404}))
   })
@@ -56,7 +56,7 @@ describe('CRUD Issue', () => {
   it('should fail update an invalid issue', () => {
     const body = {title: ''}
 
-    cy.updateIssue(1, body, true)
+    cy.updateIssue('1', body, true)
       .should(spok({status: 400}))
       .its('body')
       .should(
@@ -85,7 +85,7 @@ describe('CRUD Issue', () => {
     const body = {title: 'Milk', description: 'nice milk', id: 101}
     const {id} = body
 
-    cy.updateIssue(id, body, true)
+    cy.updateIssue(String(id), body, true)
       .should(spok({status: 404}))
       .its('body')
       .should(spok({error: 'The issue does not exist.'}))
