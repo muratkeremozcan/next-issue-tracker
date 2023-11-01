@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type {MountOptions, MountReturn} from 'cypress/react'
+import type {Issue} from '@/app/api/issues/schema'
 
 export {}
 declare global {
@@ -39,6 +40,35 @@ declare global {
         component: React.ReactNode,
         options?: MountOptions,
       ): Cypress.Chainable<MountReturn>
+
+      /** Creates a random issue with name and email */
+      createIssue(
+        body?: Partial<Issue>,
+        allowedToFail?: boolean,
+      ): Chainable<Response<Issue> & Messages>
+
+      /** Gets a issue by id */
+      getIssue(
+        id: number,
+        failOnStatusCode?: boolean,
+      ): Chainable<Response<unknown> & Messages>
+
+      getIssues(
+        failOnStatusCode?: boolean,
+      ): Chainable<Response<Issue[]> & Messages>
+
+      /** Deletes a issue by id */
+      deleteIssue(
+        id: number,
+        allowedToFail?: boolean,
+      ): Chainable<Response<unknown> & Messages>
+
+      /** Updates a issue by id */
+      updateIssue(
+        id: number,
+        body: Partial<Issue>,
+        allowedToFail?: boolean,
+      ): Chainable<Response<unknown> & Messages>
     }
   }
 }
