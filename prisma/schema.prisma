@@ -1,0 +1,23 @@
+// npx prisma init --datasource-provider sqlite  
+// add the model
+// npx prisma format
+// npx prisma generate
+// npx prisma migrate dev --name init     
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Issue {
+  id          Int      @id @default(autoincrement())
+  title       String   @unique
+  description String
+  status      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
