@@ -7,3 +7,7 @@ Cypress.Commands.add('getByCy', (selector, ...args) =>
 Cypress.Commands.add('getByCyLike', (selector, ...args) =>
   cy.get(`[data-cy*=${selector}]`, ...args),
 )
+
+Cypress.Keyboard.defaults({
+  keystrokeDelay: 0,
+})
