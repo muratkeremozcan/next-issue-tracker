@@ -71,5 +71,5 @@ const deleteIssueBy = (selector: IssueSelector) =>
     .should('be.an', 'array')
     .findOne(selector)
     .its('id')
-    .then(id => cy.deleteIssue(id))
+    .then(cy.deleteIssue)
 Cypress.Commands.add('deleteIssueBy', deleteIssueBy)
