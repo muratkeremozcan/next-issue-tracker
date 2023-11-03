@@ -60,3 +60,16 @@ Cypress.Commands.add(
     })
   },
 )
+export type IssueSelector =
+  | Required<Pick<Issue, 'title'>>
+  | Required<Pick<Issue, 'description'>>
+
+const deleteIssueBy = (selector: IssueSelector) =>
+  cy
+    .getIssues()
+    .its('body')
+    .should('be.an', 'array')
+    .findOne(selector)
+    .its('id')
+    .then(id => cy.deleteIssue(id))
+Cypress.Commands.add('deleteIssueBy', deleteIssueBy)
