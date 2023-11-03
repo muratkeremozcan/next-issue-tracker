@@ -5,7 +5,9 @@ export default function IssuesPage() {
   return (
     <div>
       <Button>
-        <Link href="/issues/new">New Issue</Link>
+        <Link data-cy="new-issue" href="/issues/new">
+          New Issue
+        </Link>
       </Button>
     </div>
   )

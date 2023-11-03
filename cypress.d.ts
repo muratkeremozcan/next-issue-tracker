@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type {MountOptions, MountReturn} from 'cypress/react'
 import type {Issue} from '@/app/api/issues/schema'
+import type {IssueSelector} from '@/cypress/support/commands/api'
 
 export {}
 declare global {
@@ -68,6 +69,10 @@ declare global {
         id: string,
         body: Partial<Issue>,
         allowedToFail?: boolean,
+      ): Chainable<Response<unknown> & Messages>
+
+      deleteIssueBy(
+        selector: IssueSelector,
       ): Chainable<Response<unknown> & Messages>
     }
   }

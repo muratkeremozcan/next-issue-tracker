@@ -2,5 +2,6 @@
 // better to import plugins where relevant, speeds up test warmup
 // import '@testing-library/cypress/add-commands'
 
+import './commands'
 import '@bahmutov/cy-api'
 import 'cypress-map'

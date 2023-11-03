@@ -1,4 +1,4 @@
-it('should visit', () => {
+it('should click nav to dashboard and issues', () => {
   cy.visit('/')
   cy.contains('Hello')
 
