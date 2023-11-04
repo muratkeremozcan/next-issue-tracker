@@ -15,6 +15,9 @@ const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {ssr: false})
 
 export default function NewIssuePage() {
   const router = useRouter()
+  // (1) setup the backend schema and infer the type from it: app/api/issues/schema.ts
+  // (2) grab the appropriate resolver from hookform/resolvers
+  // (3) use the resolver with the schema as an argument, utilize the type throughout the form component
   const {
     register,
     control,
