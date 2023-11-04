@@ -9,6 +9,8 @@ import {useState} from 'react'
 import {zodResolver} from '@hookform/resolvers/zod'
 import type {Issue} from '@/app/api/issues/schema'
 import {IssueSchema} from '@/app/api/issues/schema'
+import ErrorMessage from '@/app/components/ErrorMessage'
+import Spinner from '@/app/components/Spinner'
 // Dynamic import `SimpleMDE` with SSR disabled, because it gives terminal errors with webpack, despite 'use client'
 const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {ssr: false})
 // import 'easymde/dist/easymde.min.css' // breaks the component test, so moved it up to layout
@@ -27,13 +29,17 @@ export default function NewIssuePage() {
     resolver: zodResolver(IssueSchema),
   })
   // console.log(register('title')) // gives an object with 4 fields; name, onChange, onBlur, ref
+
   const [error, setError] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const submitIssue = async (data: Issue) => {
     try {
+      setIsSubmitting(true)
       await axios.post('/api/issues', data)
       return router.push('/issues')
     } catch (error) {
+      setIsSubmitting(false)
       console.error(error)
       setError('An unexpected error occurred. Please try again later.')
     }
@@ -55,6 +61,7 @@ export default function NewIssuePage() {
             {errors.title.message}
           </Text>
         )}
+        <ErrorMessage>{errors.title?.message}</ErrorMessage>
         {/* we need the Controller component because we cannot add props to SimpleMDE */}
         {/* it has an amazing api... seriously, wth is going on here? */}
         <Controller
@@ -64,12 +71,11 @@ export default function NewIssuePage() {
             <SimpleMDE placeholder="Description" {...field} />
           )}
         />
-        {errors.description && (
-          <Text color="red" as="p" data-cy="form-description-error">
-            {errors.description.message}
-          </Text>
-        )}
-        <Button data-cy="submit-new-issue">Submit New Issue</Button>
+        <ErrorMessage>{errors.description?.message}</ErrorMessage>
+        <Button data-cy="submit-new-issue">
+          Submit New Issue
+          {isSubmitting && <Spinner />}
+        </Button>
       </form>
     </div>
   )

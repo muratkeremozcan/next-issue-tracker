@@ -20,8 +20,7 @@ describe('Submitting an issue', () => {
   it('should show validation errors on empty form, and error on submit with filled form', () => {
     cy.getByCy('submit-new-issue').click()
 
-    cy.getByCy('form-title-error').should('be.visible')
-    cy.getByCy('form-description-error').should('be.visible')
+    cy.getByCy('error-message').should('have.length', 2).and('be.visible')
 
     fillForm()
     cy.getByCy('form-title-error').should('not.exist')
@@ -30,6 +29,7 @@ describe('Submitting an issue', () => {
     cy.intercept('POST', '/api/issues', {statusCode: 400}).as('submit-error')
     cy.getByCy('submit-new-issue').click()
     cy.wait('@submit-error')
+    cy.getByCy('spinner').should('not.exist')
     cy.getByCy('submit-error').should('be.visible')
   })
 
@@ -40,6 +40,7 @@ describe('Submitting an issue', () => {
 
     cy.getByCy('submit-new-issue').click()
     cy.wait('@submit-new-issue')
+    cy.getByCy('spinner').should('be.visible')
     cy.wait('@get-all-issues')
 
     cy.location('pathname').should('eq', '/issues')
