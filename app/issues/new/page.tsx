@@ -1,27 +1,32 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import {Button, TextField, Callout} from '@radix-ui/themes'
+import {Button, TextField, Callout, Text} from '@radix-ui/themes'
 import {useForm, Controller} from 'react-hook-form'
 import axios from 'axios'
 import {useRouter} from 'next/navigation'
 import {useState} from 'react'
+import {zodResolver} from '@hookform/resolvers/zod'
+import type {Issue} from '@/app/api/issues/schema'
+import {IssueSchema} from '@/app/api/issues/schema'
 // Dynamic import `SimpleMDE` with SSR disabled, because it gives terminal errors with webpack, despite 'use client'
 const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {ssr: false})
 // import 'easymde/dist/easymde.min.css' // breaks the component test, so moved it up to layout
 
-type IssueForm = {
-  title: string
-  description: string
-}
-
 export default function NewIssuePage() {
   const router = useRouter()
-  const {register, control, handleSubmit} = useForm<IssueForm>()
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<Issue>({
+    resolver: zodResolver(IssueSchema),
+  })
   // console.log(register('title')) // gives an object with 4 fields; name, onChange, onBlur, ref
   const [error, setError] = useState('')
 
-  const submitIssue = async (data: IssueForm) => {
+  const submitIssue = async (data: Issue) => {
     try {
       await axios.post('/api/issues', data)
       return router.push('/issues')
@@ -42,6 +47,11 @@ export default function NewIssuePage() {
         <TextField.Root>
           <TextField.Input placeholder="Title" {...register('title')} />
         </TextField.Root>
+        {errors.title && (
+          <Text color="red" as="p" data-cy="form-title-error">
+            {errors.title.message}
+          </Text>
+        )}
         {/* we need the Controller component because we cannot add props to SimpleMDE */}
         {/* it has an amazing api... seriously, wth is going on here? */}
         <Controller
@@ -51,7 +61,11 @@ export default function NewIssuePage() {
             <SimpleMDE placeholder="Description" {...field} />
           )}
         />
-
+        {errors.description && (
+          <Text color="red" as="p" data-cy="form-description-error">
+            {errors.description.message}
+          </Text>
+        )}
         <Button data-cy="submit-new-issue">Submit New Issue</Button>
       </form>
     </div>

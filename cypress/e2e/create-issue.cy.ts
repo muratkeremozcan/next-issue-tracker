@@ -3,17 +3,30 @@ import {createRandomIssue} from '@support/utils'
 
 describe('Submitting an issue', () => {
   const {title, description} = createRandomIssue()
-  beforeEach(() => {
-    cy.visit('/issues/new')
+  const fillForm = () => {
     cy.intercept('GET', '**/cdn.jsdelivr.net/**').as('codemirror')
     cy.get('[placeholder="Title"]').type(title)
     cy.get('.CodeMirror').type(description)
     cy.wait('@codemirror')
+  }
+
+  beforeEach(() => {
+    cy.visit('/issues/new')
   })
 
-  // this is better a component test app/issues/new/pageNewIssuePage.cy.tsx
-  // but at the moment we have issues there with cyct and next13+
-  it.only('should error', () => {
+  // this is better in a component test: app/issues/new/pageNewIssuePage.cy.tsx
+  // but at the moment we have an issue there with cyct and next13+
+  // https://github.com/cypress-io/cypress/issues/28236
+  it('should show validation errors on empty form, and error on submit with filled form', () => {
+    cy.getByCy('submit-new-issue').click()
+
+    cy.getByCy('form-title-error').should('be.visible')
+    cy.getByCy('form-description-error').should('be.visible')
+
+    fillForm()
+    cy.getByCy('form-title-error').should('not.exist')
+    cy.getByCy('form-description-error').should('not.exist')
+
     cy.intercept('POST', '/api/issues', {statusCode: 400}).as('submit-error')
     cy.getByCy('submit-new-issue').click()
     cy.wait('@submit-error')
@@ -21,6 +34,7 @@ describe('Submitting an issue', () => {
   })
 
   it('should submit a new issue', () => {
+    fillForm()
     cy.intercept('POST', '/api/issues').as('submit-new-issue')
     cy.intercept('GET', '/issues*').as('get-all-issues')
 
