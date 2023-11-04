@@ -19,6 +19,7 @@
     "cy:run-ct-fast": "CYPRESS_NO_COMMAND_LOG=1 yarn cy:run-ct --config video=false screenshot=false --config-file cypress/config/local.config.ts"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.2",
     "@prisma/client": "^5.5.2",
     "@radix-ui/themes": "^2.0.0",
     "axios": "^1.6.0",
