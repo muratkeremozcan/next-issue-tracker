@@ -1,0 +1,15 @@
+name: test skip
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  always-skipped:
+    runs-on: ubuntu-latest
+    if: false # This condition always evaluates to false, so the job will always be skipped
+    steps:
+      - name: This step will never run
+        run: echo "This step will be skipped."
