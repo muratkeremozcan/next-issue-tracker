@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  random-failure:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if job should run
+        id: random_check
+        run: |
+          # Generate a random number between 1 and 10
+          RANDOM_NUMBER=$(( RANDOM % 10 + 1 ))
+          echo "Random number is $RANDOM_NUMBER"
+          # Set the job's continue-on-error field based on the random number
+          if [ $RANDOM_NUMBER -le 5 ]; then
+            echo "::set-output name=should_run::true"
+          else
+            echo "::set-output name=should_run::false"
+          fi
+        shell: bash
+
+      - name: Fail the job
+        if: steps.random_check.outputs.should_run == 'true'
+        run: |
+          echo "This job is set to fail."
+          exit 1
+        shell: bash
