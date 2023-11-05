@@ -6,14 +6,16 @@ import type {Issue} from '../api/issues/schema'
 // A function to map the JSON data to the Issue type
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function transformIssueData(rawData: any[]): Issue[] {
-  return rawData.map(data => ({
-    id: data.id,
-    title: data.title,
-    description: data.description,
-    status: data.status,
-    createdAt: new Date(data.createdAt),
-    updatedAt: new Date(data.updatedAt),
-  }))
+  return rawData.map(
+    ({id, title, description, status, createdAt, updatedAt}) => ({
+      id: id,
+      title: title,
+      description: description,
+      status: status,
+      createdAt: new Date(createdAt),
+      updatedAt: new Date(updatedAt),
+    }),
+  )
 }
 
 const issues = transformIssueData(jsonData)

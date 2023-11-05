@@ -29,23 +29,23 @@ export default function IssuesPageCore({issues}: IssuesPageCoreProps) {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {issues.map(issue => (
-            <Table.Row key={issue.id}>
+          {issues.map(({id, title, status, createdAt}) => (
+            <Table.Row key={id}>
               <Table.Cell data-cy="issue-title">
-                {issue.title}
-                <div className="block md:hidden">{issue.status}</div>
+                {title}
+                <div className="block md:hidden">{status}</div>
               </Table.Cell>
               <Table.Cell
                 data-cy="issue-status"
                 className="hidden md:table-cell"
               >
-                {issue.status}
+                {status}
               </Table.Cell>
               <Table.Cell
                 data-cy="issue-createdAt"
                 className="hidden md:table-cell"
               >
-                {issue.createdAt?.toDateString()}
+                {createdAt?.toDateString()}
               </Table.Cell>
             </Table.Row>
           ))}
