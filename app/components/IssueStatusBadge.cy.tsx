@@ -1,4 +1,3 @@
-import React from 'react'
 import IssueStatusBadge from './IssueStatusBadge'
 
 describe('<IssueStatusBadge />', () => {

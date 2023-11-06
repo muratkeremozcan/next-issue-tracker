@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import {Badge} from '@radix-ui/themes'
 
 type Status = 'OPEN' | 'IN_PROGRESS' | 'DONE'
