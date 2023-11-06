@@ -8,9 +8,9 @@ import type {Issue} from '../api/issues/schema'
 function transformIssueData(rawData: any[]): Issue[] {
   return rawData.map(
     ({id, title, description, status, createdAt, updatedAt}) => ({
-      id: id,
-      title: title,
-      description: description,
+      id,
+      title,
+      description,
       status: status,
       createdAt: new Date(createdAt),
       updatedAt: new Date(updatedAt),
@@ -29,7 +29,9 @@ describe('<IssuesPageCore />', () => {
 
     issues.forEach(issue => {
       cy.getByCy(`issue-title`).contains(issue.title)
-      cy.getByCy(`issue-status`).contains(Cypress._.capitalize(issue.status))
+      cy.getByCy(`issue-status`).contains(
+        Cypress._.capitalize(issue.status).replace(/_/g, ' '),
+      )
       // @ts-expect-error for testing
       cy.getByCy(`issue-createdAt`).contains(issue.createdAt?.toDateString())
     })
