@@ -1,4 +1,3 @@
-import React from 'react'
 import IssuesPageCore from './pageCore'
 import jsonData from '../../cypress/fixtures/issues.json'
 import type {Issue} from '../api/issues/schema'
@@ -23,9 +22,7 @@ const issues = transformIssueData(jsonData)
 describe('<IssuesPageCore />', () => {
   it('should list issues and their data', () => {
     cy.mount(<IssuesPageCore issues={issues} />)
-    cy.getByCy('new-issue').should('be.visible')
-    cy.contains('Status')
-    cy.contains('Created')
+    cy.getByCy('issue-actions-comp').should('be.visible')
 
     issues.forEach(issue => {
       cy.getByCy(`issue-title`).contains(issue.title)
