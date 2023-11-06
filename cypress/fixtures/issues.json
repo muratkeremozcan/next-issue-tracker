@@ -27,7 +27,7 @@
     "id": 17,
     "title": "bug 1",
     "description": "some desc",
-    "status": "OPEN",
+    "status": "DONE",
     "createdAt": "2023-11-03T13:00:09.019Z",
     "updatedAt": "2023-11-03T13:00:09.019Z"
   },
@@ -35,7 +35,7 @@
     "id": 23,
     "title": "Eligendi brevis provident vobis valens cohibeo adipiscor tempore.",
     "description": "Temperantia sto alienus aedificium fugit umerus. Attollo theca veritatis absum auxilium communis uredo volaticus. Creator laborum vae mollitia bellum conservo torrens angelus auxilium somnus.",
-    "status": "OPEN",
+    "status": "IN_PROGRESS",
     "createdAt": "2023-11-03T13:20:05.043Z",
     "updatedAt": "2023-11-03T13:20:05.043Z"
   },

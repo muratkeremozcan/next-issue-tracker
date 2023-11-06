@@ -29,7 +29,7 @@ describe('<IssuesPageCore />', () => {
 
     issues.forEach(issue => {
       cy.getByCy(`issue-title`).contains(issue.title)
-      cy.getByCy(`issue-status`).contains(issue.status)
+      cy.getByCy(`issue-status`).contains(Cypress._.capitalize(issue.status))
       // @ts-expect-error for testing
       cy.getByCy(`issue-createdAt`).contains(issue.createdAt?.toDateString())
     })
