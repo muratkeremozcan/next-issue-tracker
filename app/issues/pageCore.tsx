@@ -1,6 +1,9 @@
+'use client'
+
 import {Button, Table} from '@radix-ui/themes'
 import Link from 'next/link'
-import type {Issue} from '../api/issues/schema'
+import type {Issue} from '@/app/api/issues/schema'
+import IssueStatusBadge from '@/app/components/IssueStatusBadge'
 
 type IssuesPageCoreProps = {
   issues: Issue[]
@@ -33,13 +36,15 @@ export default function IssuesPageCore({issues}: IssuesPageCoreProps) {
             <Table.Row key={id}>
               <Table.Cell data-cy="issue-title">
                 {title}
-                <div className="block md:hidden">{status}</div>
+                <div className="block md:hidden">
+                  <IssueStatusBadge status={status} />
+                </div>
               </Table.Cell>
               <Table.Cell
                 data-cy="issue-status"
                 className="hidden md:table-cell"
               >
-                {status}
+                <IssueStatusBadge status={status} />
               </Table.Cell>
               <Table.Cell
                 data-cy="issue-createdAt"
