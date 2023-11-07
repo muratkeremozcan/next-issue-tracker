@@ -6,3 +6,18 @@ export const createRandomIssue = (): Issue => ({
   description: faker.lorem.paragraph(),
   status: 'OPEN',
 })
+
+// A function to map the JSON data to the Issue type
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function transformIssueData(rawData: any[]): Issue[] {
+  return rawData.map(
+    ({id, title, description, status, createdAt, updatedAt}) => ({
+      id,
+      title,
+      description,
+      status: status,
+      createdAt: new Date(createdAt),
+      updatedAt: new Date(updatedAt),
+    }),
+  )
+}

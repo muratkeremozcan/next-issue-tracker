@@ -2,9 +2,10 @@ import {Table} from '@radix-ui/themes'
 import type {Issue} from '@/app/api/issues/schema'
 import IssueStatusBadge from '@/app/components/IssueStatusBadge'
 import IssueActions from './IssueActions'
+import Link from 'next/link'
 
 type IssuesPageCoreProps = {
-  issues: Issue[]
+  readonly issues: Issue[]
 }
 
 export default function IssuesPageCore({issues}: IssuesPageCoreProps) {
@@ -27,7 +28,9 @@ export default function IssuesPageCore({issues}: IssuesPageCoreProps) {
           {issues.map(({id, title, status, createdAt}) => (
             <Table.Row key={id}>
               <Table.Cell data-cy="issue-title">
-                {title}
+                <Link data-cy={`issue-id-${id}`} href={`/issues/${id}`}>
+                  {title}
+                </Link>
                 <div className="block md:hidden">
                   <IssueStatusBadge status={status} />
                 </div>

@@ -1,21 +1,6 @@
-import IssuesPageCore from './pageCore'
-import jsonData from '../../cypress/fixtures/issues.json'
-import type {Issue} from '../api/issues/schema'
-
-// A function to map the JSON data to the Issue type
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function transformIssueData(rawData: any[]): Issue[] {
-  return rawData.map(
-    ({id, title, description, status, createdAt, updatedAt}) => ({
-      id,
-      title,
-      description,
-      status: status,
-      createdAt: new Date(createdAt),
-      updatedAt: new Date(updatedAt),
-    }),
-  )
-}
+import IssuesPageCore from './pageIssuesPageCore'
+import jsonData from '@/cypress/fixtures/issues.json'
+import {transformIssueData} from '@/cypress/support/utils'
 
 const issues = transformIssueData(jsonData)
 
@@ -25,7 +10,9 @@ describe('<IssuesPageCore />', () => {
     cy.getByCy('issue-actions-comp').should('be.visible')
 
     issues.forEach(issue => {
-      cy.getByCy(`issue-title`).contains(issue.title)
+      cy.getByCy(`issue-title`)
+        .contains(issue.title)
+        .should('have.attr', 'href', `/issues/${issue.id}`)
       cy.getByCy(`issue-status`).contains(
         Cypress._.capitalize(issue.status).replace(/_/g, ' '),
       )
