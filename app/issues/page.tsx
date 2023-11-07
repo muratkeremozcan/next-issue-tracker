@@ -1,5 +1,5 @@
 import {prisma} from '@/prisma/client'
-import IssuesPageCore from './pageCore'
+import IssuesPageCore from './pageIssuesPageCore'
 import type {Issue} from '../api/issues/schema'
 import {IssueSchema} from '../api/issues/schema'
 
