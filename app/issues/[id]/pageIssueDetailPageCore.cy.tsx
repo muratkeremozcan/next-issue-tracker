@@ -10,7 +10,7 @@ describe('<IssueDetailPageCore />', () => {
   it('renders', () => {
     cy.mount(<IssueDetailPageCore issue={issue} />)
     cy.contains(issue.title).should('be.visible')
-    cy.contains(issue.status).should('be.visible')
+    cy.contains(Cypress._.capitalize(issue.status)).should('be.visible')
     cy.contains(String(issue.createdAt?.toDateString())).should('be.visible')
   })
 })
