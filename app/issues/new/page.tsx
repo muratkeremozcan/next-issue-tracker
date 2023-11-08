@@ -9,8 +9,7 @@ import {useState} from 'react'
 import {zodResolver} from '@hookform/resolvers/zod'
 import type {Issue} from '@/app/api/issues/schema'
 import {IssueSchema} from '@/app/api/issues/schema'
-import ErrorMessage from '@/app/components/ErrorMessage'
-import Spinner from '@/app/components/Spinner'
+import {ErrorMessage, Spinner} from '@/app/components'
 // Dynamic import `SimpleMDE` with SSR disabled, because it gives terminal errors with webpack, despite 'use client'
 const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {ssr: false})
 // import 'easymde/dist/easymde.min.css' // breaks the component test, so moved it up to layout

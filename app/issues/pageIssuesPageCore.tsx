@@ -1,8 +1,7 @@
 import {Table} from '@radix-ui/themes'
 import type {Issue} from '@/app/api/issues/schema'
-import IssueStatusBadge from '@/app/components/IssueStatusBadge'
+import {IssueStatusBadge, Link} from '@/app/components'
 import IssueActions from './IssueActions'
-import Link from 'next/link'
 
 type IssuesPageCoreProps = {
   readonly issues: Issue[]
