@@ -1,5 +1,5 @@
 import type {Issue} from '@/app/api/issues/schema'
-import IssueStatusBadge from '@/app/components/IssueStatusBadge'
+import {IssueStatusBadge} from '@/app/components'
 import {Card, Flex, Heading, Text} from '@radix-ui/themes'
 import ReactMarkdown from 'react-markdown'
 
