@@ -7,9 +7,10 @@ const issues = transformIssueData(jsonData)
 const issue = issues[2]
 
 describe('<IssueDetailPageCore />', () => {
-  it('should render the two children', () => {
+  it('should render issue details', () => {
     cy.mount(<IssueDetailPageCore issue={issue} />)
-    cy.getByCy('issue-details-comp').should('be.visible')
-    cy.getByCy('edit-issue-comp').should('be.visible')
+    cy.contains(issue.title).should('be.visible')
+    cy.contains(Cypress._.capitalize(issue.status)).should('be.visible')
+    cy.contains(String(issue.createdAt?.toDateString())).should('be.visible')
   })
 })
