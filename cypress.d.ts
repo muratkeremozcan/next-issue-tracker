@@ -62,18 +62,25 @@ declare global {
       deleteIssue(
         id: string,
         allowedToFail?: boolean,
-      ): Chainable<Response<unknown> & Messages>
+      ): Chainable<Response<Issue> & Messages>
 
       /** Updates a issue by id */
       updateIssue(
         id: string,
         body: Partial<Issue>,
         allowedToFail?: boolean,
-      ): Chainable<Response<unknown> & Messages>
+      ): Chainable<Response<Issue> & Messages>
 
+      /** Given title or description, deletes that issue */
       deleteIssueBy(
         selector: IssueSelector,
-      ): Chainable<Response<unknown> & Messages>
+      ): Chainable<Response<Issue> & Messages>
+
+      /** Given title or description, gets the id of an issue */
+      getIssueBy(selector: IssueSelector): Chainable<Response<Issue> & Messages>
+
+      /** Deletes all issues */
+      cleanUpIssues()
     }
   }
 }

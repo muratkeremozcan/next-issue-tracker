@@ -64,12 +64,24 @@ export type IssueSelector =
   | Required<Pick<Issue, 'title'>>
   | Required<Pick<Issue, 'description'>>
 
-const deleteIssueBy = (selector: IssueSelector) =>
+const getIssueBy = (selector: IssueSelector) =>
   cy
     .getIssues()
     .its('body')
     .should('be.an', 'array')
     .findOne(selector)
     .its('id')
-    .then(cy.deleteIssue)
+Cypress.Commands.add('getIssueBy', getIssueBy)
+
+const deleteIssueBy = (selector: IssueSelector) =>
+  getIssueBy(selector).then(cy.deleteIssue)
 Cypress.Commands.add('deleteIssueBy', deleteIssueBy)
+
+const cleanUpIssues = () =>
+  cy
+    .getIssues()
+    .its('body')
+    .should('be.an', 'array')
+    // @ts-expect-error yes it does
+    .each(issue => cy.deleteIssue(issue.id))
+Cypress.Commands.add('cleanUpIssues', cleanUpIssues)
