@@ -10,9 +10,6 @@ describe('Edit an issue', () => {
     cy.createIssue(issue)
       .its('body')
       .then(({id, title, description}) => {
-        // cy.visit('/issues')
-        // cy.getByCy('issue-title').contains(title).click()
-        // cy.location('pathname').should('eq', `/issues/${id}`)
         cy.visit(`/issues/${id}`)
 
         cy.contains(title).should('be.visible')
