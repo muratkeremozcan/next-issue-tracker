@@ -1,4 +1,4 @@
-import {Issue} from '@/app/api/issues/schema'
+/* eslint-disable cypress/unsafe-to-chain-command */
 import '../support/commands/api'
 import {createRandomIssue} from '@support/utils'
 
@@ -18,10 +18,15 @@ describe('Edit an issue', () => {
         cy.location('pathname').should('eq', `/issues/${id}/edit`)
       })
 
-    const editedTitle = `edited${title}`
-    const editedDescription = `edited${description}`
-    cy.get('[placeholder="Title"]').type(editedTitle)
-    cy.get('.CodeMirror').type(editedDescription)
+    const editedTitle = `edited-${title}`
+    const editedDescription = `edited-${description}`
+    cy.get('[placeholder="Title"]').clear().type(editedTitle)
+    // markdown editor is different than text editor, clear() doesn't work well
+    cy.get('.CodeMirror')
+      .click()
+      .type('{selectAll}')
+      .type('{backspace}')
+      .type(editedDescription)
     cy.getByCy('submit-new-issue').click()
     cy.location('pathname').should('eq', '/issues')
 

@@ -2,8 +2,8 @@ import {faker} from '@faker-js/faker'
 import type {Issue} from '@/app/api/issues/schema'
 
 export const createRandomIssue = (): Issue => ({
-  title: faker.lorem.sentence(),
-  description: faker.lorem.paragraph(),
+  title: faker.lorem.sentence(2),
+  description: faker.lorem.paragraph(1),
   status: 'OPEN',
 })
 
