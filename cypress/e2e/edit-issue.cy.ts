@@ -18,10 +18,15 @@ describe('Edit an issue', () => {
         cy.location('pathname').should('eq', `/issues/${id}/edit`)
       })
 
-    const editedTitle = `edit-${title}`
-    const editedDescription = `edit-${description}`
+    const editedTitle = `edited-${title}`
+    const editedDescription = `edited-${description}`
     cy.get('[placeholder="Title"]').clear().type(editedTitle)
-    cy.get('.CodeMirror').type(editedDescription)
+    // markdown editor is different than text editor, clear() doesn't work well
+    cy.get('.CodeMirror')
+      .click()
+      .type('{selectAll}')
+      .type('{backspace}')
+      .type(editedDescription)
     cy.getByCy('submit-new-issue').click()
     cy.location('pathname').should('eq', '/issues')
 
