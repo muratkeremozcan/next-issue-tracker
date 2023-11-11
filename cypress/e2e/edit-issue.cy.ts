@@ -7,7 +7,6 @@ describe('Edit an issue', () => {
   const {title, description} = issue
 
   it('passes', () => {
-    cy.cleanUpIssues()
     cy.createIssue(issue)
       .its('body')
       .then(({id, title, description}) => {

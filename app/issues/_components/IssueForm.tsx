@@ -10,6 +10,7 @@ import {zodResolver} from '@hookform/resolvers/zod'
 import type {Issue} from '@/app/api/issues/schema'
 import {IssueSchema} from '@/app/api/issues/schema'
 import {ErrorMessage, Spinner} from '@/app/components'
+import {curry} from 'ramda'
 // Dynamic import `SimpleMDE` with SSR disabled, because it gives terminal errors with webpack, despite 'use client'
 const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {ssr: false})
 // import 'easymde/dist/easymde.min.css' // breaks the component test, so moved it up to layout
@@ -43,7 +44,22 @@ export default function IssueForm({issue}: IssueFormProps) {
   // This refactor turns submitIssue into a higher-order function,
   // where it takes an argument and returns a new function that is used in the form submission.
   // This approach makes the function more testable and predictable, as it doesn't depend on the external state directly.
-  const submitIssue = (issue: Issue | undefined) => async (data: Issue) => {
+
+  // const submitIssue = (issue: Issue | undefined) => async (data: Issue) => {
+  //   try {
+  //     setIsSubmitting(true)
+  //     if (issue) await axios.put(`/api/issues/${issue.id}`, data)
+  //     else await axios.post('/api/issues', data)
+  //     return router.push('/issues')
+  //   } catch (error) {
+  //     setIsSubmitting(false)
+  //     console.error(error)
+  //     setError('An unexpected error occurred. Please try again later.')
+  //   }
+  // }
+
+  // currying with ramda
+  const submitIssue = curry(async (issue: Issue | undefined, data: Issue) => {
     try {
       setIsSubmitting(true)
       if (issue) await axios.put(`/api/issues/${issue.id}`, data)
@@ -54,7 +70,7 @@ export default function IssueForm({issue}: IssueFormProps) {
       console.error(error)
       setError('An unexpected error occurred. Please try again later.')
     }
-  }
+  })
 
   return (
     <div className="max-w-xl">
