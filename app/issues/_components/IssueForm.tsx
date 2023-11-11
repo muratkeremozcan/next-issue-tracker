@@ -36,10 +36,18 @@ export default function IssueForm({issue}: IssueFormProps) {
   const [error, setError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const submitIssue = async (data: Issue) => {
+  // currying
+  // submitIssue takes issue as an argument and returns another function.
+  // This inner function is the actual asynchronous function that performs the API call.
+  // When passing submitIssue to handleSubmit, it's invoked with issue as its argument.
+  // This refactor turns submitIssue into a higher-order function,
+  // where it takes an argument and returns a new function that is used in the form submission.
+  // This approach makes the function more testable and predictable, as it doesn't depend on the external state directly.
+  const submitIssue = (issue: Issue | undefined) => async (data: Issue) => {
     try {
       setIsSubmitting(true)
-      await axios.post('/api/issues', data)
+      if (issue) await axios.put(`/api/issues/${issue.id}`, data)
+      else await axios.post('/api/issues', data)
       return router.push('/issues')
     } catch (error) {
       setIsSubmitting(false)
@@ -55,7 +63,10 @@ export default function IssueForm({issue}: IssueFormProps) {
           <Callout.Text>{error}</Callout.Text>
         </Callout.Root>
       )}
-      <form className="max-w-xl space-y-3" onSubmit={handleSubmit(submitIssue)}>
+      <form
+        className="max-w-xl space-y-3"
+        onSubmit={handleSubmit(submitIssue(issue))}
+      >
         <TextField.Root>
           <TextField.Input
             defaultValue={issue?.title}
@@ -81,7 +92,7 @@ export default function IssueForm({issue}: IssueFormProps) {
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
         <Button data-cy="submit-new-issue">
-          Submit New Issue
+          {issue ? 'Update Issue' : 'Submit New Issue'}{' '}
           {isSubmitting && <Spinner />}
         </Button>
       </form>

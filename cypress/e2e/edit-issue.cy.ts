@@ -1,4 +1,4 @@
-import {Issue} from '@/app/api/issues/schema'
+/* eslint-disable cypress/unsafe-to-chain-command */
 import '../support/commands/api'
 import {createRandomIssue} from '@support/utils'
 
@@ -7,6 +7,7 @@ describe('Edit an issue', () => {
   const {title, description} = issue
 
   it('passes', () => {
+    cy.cleanUpIssues()
     cy.createIssue(issue)
       .its('body')
       .then(({id, title, description}) => {
@@ -18,9 +19,9 @@ describe('Edit an issue', () => {
         cy.location('pathname').should('eq', `/issues/${id}/edit`)
       })
 
-    const editedTitle = `edited${title}`
-    const editedDescription = `edited${description}`
-    cy.get('[placeholder="Title"]').type(editedTitle)
+    const editedTitle = `edit-${title}`
+    const editedDescription = `edit-${description}`
+    cy.get('[placeholder="Title"]').clear().type(editedTitle)
     cy.get('.CodeMirror').type(editedDescription)
     cy.getByCy('submit-new-issue').click()
     cy.location('pathname').should('eq', '/issues')

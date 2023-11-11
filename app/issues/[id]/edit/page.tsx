@@ -8,7 +8,7 @@ type EditIssuePageProps = {
 
 export default async function EditIssuePage({params}: EditIssuePageProps) {
   // @ts-expect-error zod to prisma
-  const issue: Issue = prisma.issue.findUnique({
+  const issue: Issue = await prisma.issue.findUnique({
     where: {id: parseInt(params.id)},
   })
 

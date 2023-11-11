@@ -3,7 +3,7 @@ import type {Issue} from '@/app/api/issues/schema'
 
 export const createRandomIssue = (): Issue => ({
   title: faker.lorem.sentence(),
-  description: faker.lorem.paragraph(),
+  description: faker.lorem.paragraph(2),
   status: 'OPEN',
 })
 
