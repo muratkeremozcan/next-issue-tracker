@@ -1,6 +1,5 @@
 'use client'
 
-import dynamic from 'next/dynamic'
 import {Button, TextField, Callout, Text} from '@radix-ui/themes'
 import {useForm, Controller} from 'react-hook-form'
 import axios from 'axios'
@@ -11,12 +10,10 @@ import type {Issue} from '@/app/api/issues/schema'
 import {IssueSchema} from '@/app/api/issues/schema'
 import {ErrorMessage, Spinner} from '@/app/components'
 import {curry} from 'ramda'
-// Dynamic import `SimpleMDE` with SSR disabled, because it gives terminal errors with webpack, despite 'use client'
-const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {ssr: false})
-// import 'easymde/dist/easymde.min.css' // breaks the component test, so moved it up to layout
+import SimpleMDE from 'react-simplemde-editor'
 
 type IssueFormProps = {
-  issue?: Issue
+  readonly issue?: Issue
 }
 
 export default function IssueForm({issue}: IssueFormProps) {
@@ -64,7 +61,12 @@ export default function IssueForm({issue}: IssueFormProps) {
       setIsSubmitting(true)
       if (issue) await axios.put(`/api/issues/${issue.id}`, data)
       else await axios.post('/api/issues', data)
-      return router.push('/issues')
+
+      router.push('/issues')
+
+      // client/router cache workaround to see issues we added / updated immediately (not wait 30 seconds):
+      // we force the router to refetch a page
+      return router.refresh()
     } catch (error) {
       setIsSubmitting(false)
       console.error(error)

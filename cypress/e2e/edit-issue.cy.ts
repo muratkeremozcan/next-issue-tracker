@@ -24,13 +24,11 @@ describe('Edit an issue', () => {
     // markdown editor is different than text editor, clear() doesn't work well
     cy.get('.CodeMirror')
       .click()
-      .type('{selectAll}')
-      .type('{backspace}')
+      .type('{selectAll}{backspace}')
       .type(editedDescription)
     cy.getByCy('submit-new-issue').click()
     cy.location('pathname').should('eq', '/issues')
 
-    cy.reload()
     cy.contains(editedTitle).should('be.visible').click()
     cy.contains(editedDescription).should('be.visible')
 
