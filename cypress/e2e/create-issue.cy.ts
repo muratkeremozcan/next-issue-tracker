@@ -7,7 +7,6 @@ describe('Submitting an issue', () => {
     cy.intercept('GET', '**/cdn.jsdelivr.net/**').as('codemirror')
     cy.get('[placeholder="Title"]').type(title)
     cy.get('.CodeMirror').type(description)
-    cy.wait('@codemirror')
   }
 
   beforeEach(() => {
