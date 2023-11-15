@@ -21,40 +21,14 @@ Cypress.Commands.add('googleLogin', () => {
         refresh_token: Cypress.env('GOOGLE_REFRESH_TOKEN'),
       },
     })
-    .then(({body}) => {
-      const {access_token, id_token} = body
-      console.log({body})
-
-      return cy
-        .request({
-          method: 'GET',
-          url: 'https://www.googleapis.com/oauth2/v3/userinfo',
-          headers: {Authorization: `Bearer ${access_token}`},
-        })
-        .then(({body}) => {
-          console.log({body})
-
-          // this part is from cy docs, not needed for next-auth
-          // keeping it around for now...
-          // const userItem = {
-          //   token: id_token,
-          //   user: {
-          //     googleId: body.sub,
-          //     email: body.email,
-          //     givenName: body.given_name,
-          //     familyName: body.family_name,
-          //     imageUrl: body.picture,
-          //   },
-          // }
-          // window.localStorage.setItem('googleCypress', JSON.stringify(userItem))
-
-          cy.setCookie('next-auth.session-token', id_token)
-          cy.preserveCookieOnce('next-auth.session-token')
-          // on visit, the cookie is cleared after the next-auth call
-          // since we already have the cookie set, we can stub out the next-auth calls
-          cy.intercept('/api/auth/session', {status: 200}).as('next-auth-stub')
-          cy.visit('/')
-        })
+    .its('body.id_token')
+    .then(id_token => {
+      cy.setCookie('next-auth.session-token', id_token)
+      cy.preserveCookieOnce('next-auth.session-token')
+      // on visit, the cookie is cleared after the next-auth call
+      // since we already have the cookie set, we can stub out the next-auth call
+      cy.intercept('/api/auth/session', {status: 200}).as('next-auth-stub')
+      return cy.visit('/')
     })
 })
 

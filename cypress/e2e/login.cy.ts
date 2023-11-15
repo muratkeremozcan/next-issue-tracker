@@ -4,8 +4,8 @@ describe('Login', () => {
     cy.getByCy('logout').should('be.visible')
   })
 
-  it.only('should googleLogin', () => {
+  it('should googleLogin', () => {
     cy.googleLogin()
-    // TODO: make this work
+    cy.getByCy('logout').should('be.visible')
   })
 })
