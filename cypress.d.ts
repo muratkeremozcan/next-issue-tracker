@@ -81,6 +81,16 @@ declare global {
 
       /** Deletes all issues */
       cleanUpIssues()
+
+      /**
+       * Logs-in user by using Google API request
+       */
+      googleLogin(): Chainable<Response>
+
+      /**
+       * Stubs login via fixture, to get past the auth wall
+       */
+      stubLogin(): void
     }
   }
 }
