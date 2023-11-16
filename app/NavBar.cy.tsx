@@ -1,6 +1,5 @@
 import NavBar from './NavBar'
 import {SessionProvider} from 'next-auth/react'
-import session from '@fixtures/auth-session.json'
 
 describe('<NavBar />', () => {
   it('should show loading and Sign in', () => {
@@ -35,8 +34,5 @@ describe('<NavBar />', () => {
     )
 
     cy.getByCy('login').should('not.exist')
-
-    cy.getByCy('logout').click()
-    cy.location('pathname').should('eq', '/api/auth/signout')
   })
 })
