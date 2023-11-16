@@ -1,11 +1,11 @@
 describe('Login', () => {
   it('should stubLogin', () => {
     cy.stubLogin()
-    cy.getByCy('logout').should('be.visible')
+    cy.getByCy('avatar').should('be.visible')
   })
 
   it('should googleLogin', () => {
     cy.googleLogin()
-    cy.getByCy('logout').should('be.visible')
+    cy.get('.rt-AvatarFallback').should('be.visible')
   })
 })
