@@ -10,7 +10,8 @@ describe('Submitting an issue', () => {
   }
 
   beforeEach(() => {
-    cy.visit('/issues/new')
+    cy.googleLogin()
+    cy.visit('/new')
   })
 
   // this is better in a component test: app/issues/new/pageNewIssuePage.cy.tsx
