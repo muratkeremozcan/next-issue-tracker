@@ -1,3 +1,4 @@
+'use client'
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import type {Issue} from '@/app/api/issues/schema'
@@ -5,6 +6,7 @@ import {Box, Flex, Grid} from '@radix-ui/themes'
 import EditIssueButton from './EditIssueButton'
 import IssueDetails from './IssueDetails'
 import DeleteIssueButton from './DeleteIssueButton'
+import AssigneeSelect from './AssigneeSelect'
 
 type IssueDetailPageCoreProps = {
   readonly issue: Issue
@@ -22,6 +24,7 @@ export default function IssueDetailPageCore({issue}: IssueDetailPageCoreProps) {
       </Box>
       <Box className="col-span-1">
         <Flex direction="column" gap="4">
+          <AssigneeSelect />
           <EditIssueButton issueId={issue.id!} />
           <DeleteIssueButton issueId={issue.id!} />
         </Flex>

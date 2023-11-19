@@ -24,5 +24,5 @@ export default async function IssueDetailPage({params}: IssueDetailPageProps) {
   })) as Issue
 
   if (!issue) return notFound()
-  return IssueDetailPageCore({issue})
+  return <IssueDetailPageCore issue={issue} />
 }

@@ -1,4 +1,3 @@
-import React from 'react'
 import EditIssueButton from './EditIssueButton'
 
 describe('<EditIssueButton />', () => {
