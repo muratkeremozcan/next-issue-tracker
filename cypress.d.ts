@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type {MountOptions, MountReturn} from 'cypress/react'
 import type {Issue} from '@/app/api/issues/schema'
-import type {IssueSelector} from '@/cypress/support/commands/api'
+import type {User} from '@prisma/client'
+import type {IssueSelector} from '@/cypress/support/commands/api-issue'
 
 export {}
 declare global {
@@ -81,6 +82,12 @@ declare global {
 
       /** Deletes all issues */
       cleanUpIssues()
+
+      // TODO: get the User type from prisma
+      /** Gets all users */
+      getUsers(
+        failOnStatusCode?: boolean,
+      ): Chainable<Response<User[]> & Messages>
 
       /**
        * Logs-in user by using Google API request

@@ -1,5 +1,5 @@
 import {NextResponse, type NextRequest} from 'next/server'
-import {IssueSchema, type Issue} from './schema'
+import {IssueSchema} from './schema'
 import {prisma} from '@/prisma/client'
 
 // need to have an argument (although not used) to prevent NextJs caching the result
