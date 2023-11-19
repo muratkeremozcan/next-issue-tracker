@@ -1,4 +1,4 @@
-import '../../support/commands/api'
+import '../../support/commands/api-issue'
 import {createRandomIssue} from '@support/utils'
 import spok from 'cy-spok'
 

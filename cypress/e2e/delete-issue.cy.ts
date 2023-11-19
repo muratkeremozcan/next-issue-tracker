@@ -1,5 +1,5 @@
 /* eslint-disable cypress/unsafe-to-chain-command */
-import '../support/commands/api'
+import '../support/commands/api-issue'
 import {createRandomIssue} from '@support/utils'
 
 describe('Delete an issue', () => {
