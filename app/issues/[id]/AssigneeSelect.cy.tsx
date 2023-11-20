@@ -1,3 +1,4 @@
+import QueryClientProvider from '@/app/QueryClientProvider'
 import AssigneeSelect from './AssigneeSelect'
 import {Theme} from '@radix-ui/themes'
 
@@ -6,7 +7,9 @@ describe('<AssigneeSelect />', () => {
     cy.intercept('GET', '/api/users', {fixture: 'users.json'}).as('users')
     cy.mount(
       <Theme appearance="light" accentColor="violet">
-        <AssigneeSelect />
+        <QueryClientProvider>
+          <AssigneeSelect />
+        </QueryClientProvider>
       </Theme>,
     )
 
