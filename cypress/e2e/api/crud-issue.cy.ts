@@ -43,6 +43,22 @@ describe('CRUD Issue', () => {
           .its('body')
           .should(spok({id, title: newTitle, description: newDescription}))
 
+        cy.log(
+          '**if assignedToUserId is provided but the user does not exist, gives the err message**',
+        )
+        cy.updateIssue(
+          id,
+          {
+            title: newTitle,
+            description: newDescription,
+            assignedToUserId: '666',
+          },
+          true,
+        )
+          .should(spok({status: 400}))
+          .its('body.message')
+          .should('eq', 'User does not exist')
+
         cy.deleteIssue(id).should(spok({status: 200}))
       })
   })

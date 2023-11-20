@@ -11,6 +11,9 @@ type Props = {
 const issueExists = (id: string) =>
   prisma.issue.findUnique({where: {id: Number(id)}})
 
+const userExists = (id: string | undefined) =>
+  prisma.user.findUnique({where: {id}})
+
 export async function GET(request: NextRequest, {params: {id}}: Props) {
   const issue = (await prisma.issue.findUnique({
     where: {id: Number(id)},
@@ -23,11 +26,14 @@ export async function GET(request: NextRequest, {params: {id}}: Props) {
 
 export async function PUT(request: NextRequest, {params: {id}}: Props) {
   const body: Issue = await request.json()
-  const {title, description, status} = body
+  const {title, description, status, assignedToUserId} = body
 
   const validation = IssueSchema.safeParse(body)
   if (!validation.success)
     return NextResponse.json(validation.error.errors, {status: 400})
+
+  if (assignedToUserId && !(await userExists(assignedToUserId)))
+    return NextResponse.json({message: 'User does not exist'}, {status: 400})
 
   if (!(await issueExists(id)))
     return NextResponse.json(
@@ -37,7 +43,7 @@ export async function PUT(request: NextRequest, {params: {id}}: Props) {
 
   const updatedIssue = await prisma.issue.update({
     where: {id: Number(id)},
-    data: {title, description, status},
+    data: {title, description, status, assignedToUserId},
   })
 
   return NextResponse.json(updatedIssue, {status: 200})
