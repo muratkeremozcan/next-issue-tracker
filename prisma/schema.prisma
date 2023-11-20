@@ -1,8 +1,10 @@
 // npx prisma init --datasource-provider sqlite  
-// add the model
+// add the model:
 // npx prisma format
 // npx prisma generate
 // npx prisma migrate dev --name init     
+// when you change the model:
+// npx prisma migrate dev
 
 generator client {
   provider = "prisma-client-js"
@@ -14,14 +16,14 @@ datasource db {
 }
 
 model Issue {
-  id          Int      @id @default(autoincrement())
-  title       String   @unique
-  description String
-  status      String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  User        User?    @relation(fields: [userId], references: [id])
-  userId      String?
+  id               Int      @id @default(autoincrement())
+  title            String   @unique
+  description      String
+  status           String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  assignedToUserId String?
+  assignedToUser   User?    @relation(fields: [assignedToUserId], references: [id])
 }
 
 // next-auth copy paste
