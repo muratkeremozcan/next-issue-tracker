@@ -1,5 +1,5 @@
 import {NextResponse, type NextRequest} from 'next/server'
-import {IssueSchema, type Issue} from '../schema'
+import {patchIssueSchema, type Issue} from '../schema'
 import {prisma} from '@/prisma/client'
 
 type Props = {
@@ -28,7 +28,7 @@ export async function PUT(request: NextRequest, {params: {id}}: Props) {
   const body: Issue = await request.json()
   const {title, description, status, assignedToUserId} = body
 
-  const validation = IssueSchema.safeParse(body)
+  const validation = patchIssueSchema.safeParse(body)
   if (!validation.success)
     return NextResponse.json(validation.error.errors, {status: 400})
 

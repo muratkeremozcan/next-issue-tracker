@@ -3,10 +3,11 @@ import type {User} from '@prisma/client'
 import {Select} from '@radix-ui/themes'
 import {useQuery} from '@tanstack/react-query'
 import axios from 'axios'
+import type {Issue} from '@/app/api/issues/schema'
 import Skeleton from 'react-loading-skeleton'
 // import 'react-loading-skeleton/dist/skeleton.css' // breaks next.js + cyct
 
-export default function AssigneeSelect() {
+export default function AssigneeSelect({issue}: {issue: Issue}) {
   // note: useEffect + useState into react-query refactor
   // const [users, setUsers] = useState<User[]>([])
   // useEffect(() => {
@@ -26,15 +27,28 @@ export default function AssigneeSelect() {
     retry: 3, // retry 3 times
   })
 
+  const assignIssue = (userId: string) => {
+    const payload = {
+      assignedToUserId: userId === 'unassigned' ? null : userId,
+    }
+    axios.put(`/api/issues/${issue.id}`, payload).catch(() => {
+      // toast.error('Changes could not be saved.')
+    })
+  }
+
   if (isLoading) return <Skeleton />
   if (error) return null
 
   return (
-    <Select.Root>
+    <Select.Root
+      defaultValue={issue.assignedToUserId || ''}
+      onValueChange={assignIssue}
+    >
       <Select.Trigger placeholder="Assign" data-cy="assign" />
       <Select.Content>
         <Select.Group>
           <Select.Label>Suggestions</Select.Label>
+          <Select.Item value="unassigned">Unassigned</Select.Item>
           {users?.map(({id, name}) => (
             <Select.Item key={id} value={id} data-cy={`user-${name}`}>
               {name}
