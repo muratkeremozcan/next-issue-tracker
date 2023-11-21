@@ -83,15 +83,8 @@ describe('CRUD Issue', () => {
             type: 'string',
             inclusive: true,
             exact: false,
-            message: 'String must contain at least 1 character(s)',
+            message: 'Title is required.',
             path: ['title'],
-          },
-          {
-            code: 'invalid_type',
-            expected: 'string',
-            received: 'undefined',
-            path: ['description'],
-            message: 'Required',
           },
         ]),
       )
