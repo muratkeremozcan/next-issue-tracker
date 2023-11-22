@@ -38,12 +38,22 @@ Cypress.Commands.add('googleLogin', () => {
       let interceptCsrfToken = ''
       let interceptCallBackUrl = ''
 
+      // request.reply() with fn: the request is not sent to the server.
+      // Instead, the function you provide is used to dynamically generate a response.
+      // This function doesn't receive a response from the server (since there's no server interaction),
+      // but you can use it to construct a custom response.
+
+      // request.continue() with fn: the request is sent to the server.
+      // The function you provide is called with the actual server response.
+      // You can then modify this response before it's passed back to your application.
+
       // on visit, the cookie is cleared after the next-auth call
       // since we already have the cookie set, we can stub out the next-auth call
       cy.intercept('/api/auth/session', request => {
-        request.reply(({headers}) => {
-          const setCookieHeader = headers['set-cookie']
-
+        request.reply(response => {
+          const setCookieHeader = response.headers['set-cookie']
+          response.headers['set-cookie'] = []
+          // request.continue: Send the request outgoing, skipping any other request handlers. If a function is passed, the request will be sent outgoing, and the function will be called with the response from the upstream server.
           interceptCsrfToken = parseCookieValue(
             setCookieHeader,
             'next-auth.csrf-token',
@@ -56,6 +66,9 @@ Cypress.Commands.add('googleLogin', () => {
           // we get the values here
           console.log({interceptCsrfToken})
           console.log({interceptCallBackUrl})
+
+          // remove the set cookie header from the response
+          response.headers['set-cookie'] = []
         })
       }).as('next-auth-call')
 
@@ -63,19 +76,18 @@ Cypress.Commands.add('googleLogin', () => {
       // however the real next-auth call goes through
 
       cy.visit('/')
-      // cy.wait('@next-auth-call')
+      cy.wait('@next-auth-call')
 
       cy.then(() => {
         // we also get the values here
         console.log({interceptCsrfToken})
         console.log({interceptCallBackUrl})
 
-        // we set them
+        // we set the additional cookie
         cy.setCookie('next-auth.session-token', id_token)
-        cy.setCookie('next-auth.csrf-token', interceptCsrfToken)
-        cy.setCookie('next-auth.callback-url', interceptCallBackUrl)
 
-        // at this point check the application > Cookies, the next-auth call does not get intercepted, and we see the overwritten values
+        // at this point check the application > Cookies,
+        // we have everything, but we are not "Logged in", we still see the Login button
       })
     })
 })
