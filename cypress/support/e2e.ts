@@ -48,10 +48,10 @@ Cypress.Commands.add('googleLogin', () => {
       // You can then modify this response before it's passed back to your application.
 
       cy.intercept('/api/auth/session', request => {
-        request.continue(response => {
+        request.reply(response => {
           const setCookieHeader = response.headers['set-cookie']
           response.headers['set-cookie'] = []
-          // request.continue: Send the request outgoing, skipping any other request handlers. If a function is passed, the request will be sent outgoing, and the function will be called with the response from the upstream server.
+
           interceptCsrfToken = parseCookieValue(
             setCookieHeader,
             'next-auth.csrf-token',
