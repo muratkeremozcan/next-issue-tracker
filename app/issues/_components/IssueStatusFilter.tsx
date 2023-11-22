@@ -1,3 +1,5 @@
+'use client'
+
 import {Select} from '@radix-ui/themes'
 
 type Status = 'OPEN' | 'IN_PROGRESS' | 'DONE'
