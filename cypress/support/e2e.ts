@@ -47,10 +47,8 @@ Cypress.Commands.add('googleLogin', () => {
       // The function you provide is called with the actual server response.
       // You can then modify this response before it's passed back to your application.
 
-      // on visit, the cookie is cleared after the next-auth call
-      // since we already have the cookie set, we can stub out the next-auth call
       cy.intercept('/api/auth/session', request => {
-        request.reply(response => {
+        request.continue(response => {
           const setCookieHeader = response.headers['set-cookie']
           response.headers['set-cookie'] = []
           // request.continue: Send the request outgoing, skipping any other request handlers. If a function is passed, the request will be sent outgoing, and the function will be called with the response from the upstream server.
