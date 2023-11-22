@@ -6,7 +6,7 @@ const issues = transformIssueData(jsonData)
 
 describe('<IssuesPageCore />', () => {
   it('should list issues and their data', () => {
-    cy.mount(<IssuesPageCore issues={issues} />)
+    cy.wrappedMount(<IssuesPageCore issues={issues} />)
     cy.getByCy('issue-actions-comp').should('be.visible')
 
     issues.forEach(issue => {

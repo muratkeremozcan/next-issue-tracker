@@ -34,11 +34,21 @@ declare global {
         options?: MountOptions,
       ): Cypress.Chainable<MountReturn>
 
-      /** Mounts the component wrapped by RootLayout (for styles)
+      /** Mounts the component wrapped by Theme (for styles)
        * @param component React Node to mount
        * @param options Additional options to pass into mount
        */
       wrappedMount(
+        component: React.ReactNode,
+        options?: MountOptions,
+      ): Cypress.Chainable<MountReturn>
+
+      /** Mounts the component wrapped by Theme (for styles)
+       * and QueryClientProvider (for react-query)
+       * @param component React Node to mount
+       * @param options Additional options to pass into mount
+       */
+      queryWrappedMount(
         component: React.ReactNode,
         options?: MountOptions,
       ): Cypress.Chainable<MountReturn>
