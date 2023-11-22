@@ -6,6 +6,7 @@ import Link from 'next/link'
 
 export default function AuthStatus() {
   const {status, data: session} = useSession()
+  console.log({session})
 
   if (status === 'loading') return null
 

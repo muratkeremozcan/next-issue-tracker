@@ -62,11 +62,11 @@ Cypress.Commands.add('googleLogin', () => {
           )
 
           // we get the values here
-          console.log({interceptCsrfToken})
-          console.log({interceptCallBackUrl})
+          // console.log({interceptCsrfToken})
+          // console.log({interceptCallBackUrl})
 
-          // remove the set cookie header from the response
-          response.headers['set-cookie'] = []
+          // remove the set cookie header from the response, so next-auth doesn't set them
+          delete response.headers['set-cookie']
         })
       }).as('next-auth-call')
 
@@ -78,11 +78,13 @@ Cypress.Commands.add('googleLogin', () => {
 
       cy.then(() => {
         // we also get the values here
-        console.log({interceptCsrfToken})
-        console.log({interceptCallBackUrl})
+        // console.log({interceptCsrfToken})
+        // console.log({interceptCallBackUrl})
 
-        // we set the additional cookie
+        // we set the cookies ourselves
         cy.setCookie('next-auth.session-token', id_token)
+        cy.setCookie('next-auth.csrf-token', interceptCsrfToken)
+        cy.setCookie('next-auth.callback-url', interceptCallBackUrl)
 
         // at this point check the application > Cookies,
         // we have everything, but we are not "Logged in", we still see the Login button
