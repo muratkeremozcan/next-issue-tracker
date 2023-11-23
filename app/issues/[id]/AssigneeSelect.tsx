@@ -36,7 +36,7 @@ export default function AssigneeSelect({issue}: {issue: Issue}) {
 
   const assignIssue = async (userId: string) => {
     const payload = {
-      assignedToUserId: userId === 'unassigned' ? null : userId,
+      assignedToUserId: userId === 'UNASSIGNED' ? null : userId,
     }
     try {
       await axios.put(`/api/issues/${issue.id}`, payload)
@@ -59,7 +59,7 @@ export default function AssigneeSelect({issue}: {issue: Issue}) {
         <Select.Content>
           <Select.Group>
             <Select.Label>Suggestions</Select.Label>
-            <Select.Item value="unassigned">Unassigned</Select.Item>
+            <Select.Item value="UNASSIGNED">Unassigned</Select.Item>
             {users?.map(({id, name}) => (
               <Select.Item key={id} value={id} data-cy={`user-${name}`}>
                 {name}

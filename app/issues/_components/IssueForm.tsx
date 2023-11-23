@@ -62,7 +62,7 @@ export default function IssueForm({issue}: IssueFormProps) {
       if (issue) await axios.put(`/api/issues/${issue.id}`, data)
       else await axios.post('/api/issues', data)
 
-      router.push('/issues')
+      router.push('/issues/list')
 
       // client/router cache workaround to see issues we added / updated immediately (not wait 30 seconds):
       // we force the router to refetch a page

@@ -19,7 +19,7 @@ export default function DeleteIssueButton({issueId}: DeleteIssueButton) {
     try {
       setIsDeleting(true)
       await axios.delete(`/api/issues/${issueId}`)
-      router.push('/issues')
+      router.push('/issues/list')
 
       // client/router cache workaround to see issues we added / updated immediately (not wait 30 seconds):
       // we force the router to refetch a page

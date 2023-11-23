@@ -1,6 +1,6 @@
 import {prisma} from '@/prisma/client'
 import IssuesPageCore from './pageIssuesPageCore'
-import type {Issue} from '../api/issues/schema'
+import type {Issue} from '../../api/issues/schema'
 
 // server cache workaround to see issues we added / updated:
 // issues page is served from cache, that is why we do not see the new issue we add

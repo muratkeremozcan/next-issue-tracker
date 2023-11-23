@@ -22,7 +22,7 @@ describe('Delete an issue', () => {
     cy.getByCy('delete-issue-confirm').click()
     cy.wait('@delete-issue').its('response.statusCode').should('eq', 200)
 
-    cy.location('pathname').should('eq', '/issues')
+    cy.location('pathname').should('eq', '/issues/list')
     cy.contains(title).should('not.exist')
   })
 
