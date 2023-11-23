@@ -15,7 +15,7 @@ describe('navigation', () => {
     cy.createIssue(body)
     cy.visit('/')
     cy.contains('Issues').click()
-    cy.location('pathname').should('equal', '/issues')
+    cy.location('pathname').should('equal', '/issues/list')
 
     cy.getByCy('issues-page-core-comp').should('be.visible')
     cy.getByCy('issue-title').should('have.length.gt', 0)

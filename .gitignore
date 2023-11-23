@@ -3,6 +3,7 @@
 # testing
 /cypress/screenshots
 /cypress/videos
+/cypress/downloads
 
 # dependencies
 /node_modules

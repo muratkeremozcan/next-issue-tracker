@@ -27,7 +27,7 @@ describe('Edit an issue', () => {
       .type('{selectAll}{backspace}')
       .type(editedDescription)
     cy.getByCy('submit-new-issue').click()
-    cy.location('pathname').should('eq', '/issues')
+    cy.location('pathname').should('eq', '/issues/list')
 
     cy.contains(editedTitle).should('be.visible').click()
     cy.contains(editedDescription).should('be.visible')

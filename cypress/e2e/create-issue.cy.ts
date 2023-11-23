@@ -35,14 +35,14 @@ describe('Submitting an issue', () => {
   it('should submit a new issue', () => {
     fillForm()
     cy.intercept('POST', '/api/issues').as('submit-new-issue')
-    cy.intercept('GET', '/issues*').as('get-all-issues')
+    cy.intercept('GET', '/issues/list*').as('get-all-issues')
 
     cy.getByCy('submit-new-issue').click()
     cy.wait('@submit-new-issue')
     cy.getByCy('spinner').should('be.visible')
     cy.wait('@get-all-issues')
 
-    cy.location('pathname').should('eq', '/issues')
+    cy.location('pathname').should('eq', '/issues/list')
 
     cy.deleteIssueBy({title})
   })

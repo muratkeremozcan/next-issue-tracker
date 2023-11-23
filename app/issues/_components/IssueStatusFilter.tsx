@@ -1,30 +1,35 @@
 'use client'
 
 import {Select} from '@radix-ui/themes'
+import type {Status} from '../types'
+import {useRouter} from 'next/navigation'
 
-type Status = 'OPEN' | 'IN_PROGRESS' | 'DONE'
+const allStatusesValue = 'ALL_STATUSES' // Special value to represent 'All'
 
-const statuses: {label: string; value?: Status}[] = [
-  {label: 'All'},
+const statuses: {label: string; value?: Status | typeof allStatusesValue}[] = [
+  {label: 'All', value: allStatusesValue},
   {label: 'Open', value: 'OPEN'},
   {label: 'In progress', value: 'IN_PROGRESS'},
   {label: 'Done', value: 'DONE'},
 ]
 
 export default function IssueStatusFilter() {
+  const router = useRouter()
+
+  const handleValueChange = (status: Status | typeof allStatusesValue) => {
+    const query = status !== allStatusesValue ? `?status=${status}` : ''
+    router.push(`/issues/list${query}`)
+  }
+
   return (
-    <Select.Root>
+    <Select.Root onValueChange={handleValueChange}>
       <Select.Trigger
         placeholder="Filter by status..."
         data-cy="filter-by-status"
       />
       <Select.Content>
-        {statuses.map(({value, label}) => (
-          <Select.Item
-            key={value}
-            value={value || 'unassigned'}
-            data-cy={`status-${value}`}
-          >
+        {statuses.map(({label, value}) => (
+          <Select.Item key={value} value={value || ''}>
             {label}
           </Select.Item>
         ))}

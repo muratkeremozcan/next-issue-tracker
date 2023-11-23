@@ -1,4 +1,4 @@
-import IssueActions from './IssueActions'
+import LoadingIssuesPage from './loading'
 
 // TODO: find a way to make useRouter() work in a component test with next 13+
 // this lib may be promising, but https://www.npmjs.com/package/next-router-mock
@@ -8,9 +8,12 @@ import IssueActions from './IssueActions'
 // https://github.com/mike-plummer/nextjs-cypress-ct-example/blob/9110384cc8a2fad869104ffb0c75b92990fb3e5b/cypress/support/component.js#L37
 // cy issue https://github.com/cypress-io/cypress/issues/28236
 
-describe.skip('<IssueActions />', () => {
+describe.skip('<LoadingIssuesPage />', () => {
   it('renders', () => {
-    cy.wrappedMount(<IssueActions />)
-    cy.getByCy('new-issue').contains('New Issue')
+    cy.wrappedMount(<LoadingIssuesPage />)
+    cy.getByCy('issue-actions-comp').should('be.visible')
+    cy.contains('Issue')
+    cy.contains('Status')
+    cy.contains('Created')
   })
 })
