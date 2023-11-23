@@ -17,6 +17,9 @@ export default async function IssueDetailPage({params}: IssueDetailPageProps) {
   // Don't forget to add the middleware file in the readme
   // const session = await getServerSession(authOptions)
 
+  const id = parseInt(params.id, 10)
+  if (isNaN(id)) return notFound()
+
   const issue = (await prisma.issue.findUnique({
     where: {
       id: parseInt(params.id),

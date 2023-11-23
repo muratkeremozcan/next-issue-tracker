@@ -13,15 +13,14 @@ const statuses: {label: string; value?: Status}[] = [
 ]
 
 export default function IssueStatusFilter() {
-  // const router = useRouter()
+  const router = useRouter()
 
-  // const handleValueChange = (status: Status | 'unassigned') => {
-  //   const query = status !== 'unassigned' ? `?status=${status}` : ''
-  //   router.push(`/issues/list${query}`)
-  // }
+  const handleValueChange = (status: Status | 'unassigned') => {
+    const query = status !== 'unassigned' ? `?status=${status}` : ''
+    router.push(`/issues/list${query}`)
+  }
   return (
-    <Select.Root>
-      {/* <Select.Root onValueChange={handleValueChange}> */}
+    <Select.Root onValueChange={handleValueChange}>
       <Select.Trigger
         placeholder="Filter by status..."
         data-cy="filter-by-status"
