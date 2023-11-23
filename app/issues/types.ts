@@ -1,1 +1,1 @@
-export type Status = 'OPEN' | 'IN_PROGRESS' | 'DONE' | 'UNASSIGNED'
+export type Status = 'OPEN' | 'IN_PROGRESS' | 'DONE'

@@ -11,7 +11,6 @@ const statuses: {label: string; value?: Status | typeof allStatusesValue}[] = [
   {label: 'Open', value: 'OPEN'},
   {label: 'In progress', value: 'IN_PROGRESS'},
   {label: 'Done', value: 'DONE'},
-  {label: 'Unassigned', value: 'UNASSIGNED'},
 ]
 
 export default function IssueStatusFilter() {

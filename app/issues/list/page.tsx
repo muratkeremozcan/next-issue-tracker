@@ -17,7 +17,7 @@ type IssuesPageProps = {
 
 export default async function IssuesPage({searchParams}: IssuesPageProps) {
   // if an invalid issue is passed, we want prisma to return everything using undefined
-  const statuses = Object.values(['OPEN', 'IN_PROGRESS', 'DONE', 'UNASSIGNED'])
+  const statuses = Object.values(['OPEN', 'IN_PROGRESS', 'DONE'])
   const status = statuses.includes(searchParams.status)
     ? searchParams.status
     : undefined
