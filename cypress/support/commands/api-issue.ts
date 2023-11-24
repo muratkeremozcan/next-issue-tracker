@@ -63,6 +63,7 @@ Cypress.Commands.add(
 export type IssueSelector =
   | Required<Pick<Issue, 'title'>>
   | Required<Pick<Issue, 'description'>>
+  | Required<Pick<Issue, 'status'>>
 
 const getIssueBy = (selector: IssueSelector) =>
   cy
@@ -76,6 +77,10 @@ Cypress.Commands.add('getIssueBy', getIssueBy)
 const deleteIssueBy = (selector: IssueSelector) =>
   getIssueBy(selector).then(cy.deleteIssue)
 Cypress.Commands.add('deleteIssueBy', deleteIssueBy)
+
+const updateIssueBy = (selector: IssueSelector, body: Partial<Issue>) =>
+  getIssueBy(selector).then(id => cy.updateIssue(id, body))
+Cypress.Commands.add('updateIssueBy', updateIssueBy)
 
 const cleanUpIssues = () =>
   cy

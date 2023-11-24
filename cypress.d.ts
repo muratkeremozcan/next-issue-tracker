@@ -90,6 +90,12 @@ declare global {
       /** Given title or description, gets the id of an issue */
       getIssueBy(selector: IssueSelector): Chainable<Response<Issue> & Messages>
 
+      /** Given the title or description, updates an issue */
+      updateIssueBy(
+        selector: IssueSelector,
+        body: Partial<Issue>,
+      ): Chainable<Response<Issue> & Messages>
+
       /** Deletes all issues */
       cleanUpIssues()
 

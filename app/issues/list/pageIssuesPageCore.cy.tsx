@@ -14,7 +14,9 @@ const issues = transformIssueData(jsonData)
 
 describe.skip('<IssuesPageCore />', () => {
   it('should list issues and their data', () => {
-    cy.wrappedMount(<IssuesPageCore issues={issues} />)
+    cy.wrappedMount(
+      <IssuesPageCore issues={issues} searchParams={{orderBy: 'title'}} />,
+    )
     cy.getByCy('issue-actions-comp').should('be.visible')
 
     issues.forEach(issue => {

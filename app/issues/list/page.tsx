@@ -20,9 +20,23 @@ export default async function IssuesPage({searchParams}: IssuesPageProps) {
     ? searchParams.status
     : undefined
 
+  const validOrderDirections = ['asc', 'desc']
+  const validColumnValues = ['title', 'status', 'createdAt']
+
+  const orderDirection = validOrderDirections.includes(
+    searchParams.orderDirection,
+  )
+    ? searchParams.orderDirection
+    : undefined
+
+  const orderBy = validColumnValues.includes(searchParams.orderBy)
+    ? {[searchParams.orderBy]: orderDirection}
+    : {}
+
   // @ts-expect-error zod to prisma
   const issues: Issue[] = await prisma.issue.findMany({
     where: {status},
+    orderBy,
   })
 
   return <IssuesPageCore issues={issues} searchParams={searchParams} />

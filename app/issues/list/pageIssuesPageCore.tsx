@@ -8,7 +8,7 @@ import {ArrowDownIcon, ArrowUpIcon} from '@radix-ui/react-icons'
 
 type IssuesPageCoreProps = {
   readonly issues: Issue[]
-  readonly searchParams: IssueQuery
+  readonly searchParams?: IssueQuery
 }
 
 export default function IssuesPageCore({
@@ -25,6 +25,7 @@ export default function IssuesPageCore({
     ...searchParams,
     orderBy: columnValue,
     orderDirection:
+      searchParams &&
       searchParams.orderBy === columnValue &&
       searchParams.orderDirection === 'asc'
         ? 'desc'
@@ -40,17 +41,19 @@ export default function IssuesPageCore({
             {columns.map(column => (
               <Table.ColumnHeaderCell key={column.value}>
                 <NextLink
+                  data-cy={`column-header-${column.value}`}
                   href={{
                     query: handleColumnClick(column.value),
                   }}
                 >
                   {column.label}
                 </NextLink>
-                {column.value === searchParams.orderBy &&
+                {searchParams &&
+                  column.value === searchParams.orderBy &&
                   (searchParams.orderDirection === 'asc' ? (
-                    <ArrowUpIcon className="inline" />
+                    <ArrowUpIcon data-cy="sort-asc" className="inline" />
                   ) : (
-                    <ArrowDownIcon className="inline" />
+                    <ArrowDownIcon data-cy="sort-desc" className="inline" />
                   ))}
               </Table.ColumnHeaderCell>
             ))}
@@ -58,7 +61,7 @@ export default function IssuesPageCore({
         </Table.Header>
         <Table.Body>
           {issues.map(({id, title, status, createdAt}) => (
-            <Table.Row key={id}>
+            <Table.Row key={id} data-cy={`issue-row-${title}`}>
               <Table.Cell data-cy="issue-title">
                 <Link data-cy={`issue-id-${id}`} href={`/issues/${id}`}>
                   {title}
