@@ -1,7 +1,7 @@
 import {prisma} from '@/prisma/client'
 import IssuesPageCore from './pageIssuesPageCore'
 import type {Issue} from '../../api/issues/schema'
-import type {Status} from '../types'
+import type {IssueQuery} from '../types'
 
 // server cache workaround to see issues we added / updated:
 // issues page is served from cache, that is why we do not see the new issue we add
@@ -10,9 +10,7 @@ export const dynamic = 'force-dynamic'
 // export const revalidate = 0 // same thing (output has to be revalidated every 0 seconds)
 
 type IssuesPageProps = {
-  readonly searchParams: {
-    status: Status
-  }
+  readonly searchParams: IssueQuery
 }
 
 export default async function IssuesPage({searchParams}: IssuesPageProps) {
@@ -27,5 +25,5 @@ export default async function IssuesPage({searchParams}: IssuesPageProps) {
     where: {status},
   })
 
-  return <IssuesPageCore issues={issues} />
+  return <IssuesPageCore issues={issues} searchParams={searchParams} />
 }
