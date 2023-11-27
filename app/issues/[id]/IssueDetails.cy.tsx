@@ -1,4 +1,3 @@
-import React from 'react'
 import jsonData from '@/cypress/fixtures/issues.json'
 import IssueDetails from './IssueDetails'
 import {transformIssueData} from '@/cypress/support/utils'
