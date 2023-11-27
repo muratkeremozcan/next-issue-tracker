@@ -39,7 +39,10 @@ export default function IssuesPageCore({
         <Table.Header>
           <Table.Row>
             {columns.map(column => (
-              <Table.ColumnHeaderCell key={column.value}>
+              <Table.ColumnHeaderCell
+                key={column.value}
+                className={column.className}
+              >
                 <NextLink
                   data-cy={`column-header-${column.value}`}
                   href={{
