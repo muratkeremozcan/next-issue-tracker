@@ -19,9 +19,6 @@ export default function IssueStatusFilter() {
   const searchParams = useSearchParams()
 
   const handleValueChange = (status: Status | typeof allStatusesValue) => {
-    // const query = status !== allStatusesValue ? `?status=${status}` : ''
-    // searchParams.get('orderBy')
-    // router.push(`/issues/list${query}`)
     const params = new URLSearchParams()
     if (status) params.append('status', status)
     if (searchParams.get('orderBy'))
