@@ -8,6 +8,7 @@ describe('Delete an issue', () => {
   let issueId: string
 
   beforeEach(() => {
+    cy.cleanUpIssues()
     cy.createIssue(issue)
       .its('body.id')
       .then(id => {

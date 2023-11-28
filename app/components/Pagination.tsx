@@ -10,9 +10,9 @@ import {Button, Flex, Text} from '@radix-ui/themes'
 import {useRouter, useSearchParams} from 'next/navigation'
 
 type PaginationProps = {
-  itemCount: number
-  pageSize: number
-  currentPage: number
+  readonly itemCount: number
+  readonly pageSize: number
+  readonly currentPage: number
 }
 
 export default function Pagination({
