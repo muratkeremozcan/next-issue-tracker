@@ -5,15 +5,22 @@ import NextLink from 'next/link'
 import IssueActions from '../_components/IssueActions'
 import type {IssueQuery} from '../types'
 import {ArrowDownIcon, ArrowUpIcon} from '@radix-ui/react-icons'
+import Pagination from '@/app/components/Pagination'
 
 type IssuesPageCoreProps = {
   readonly issues: Issue[]
   readonly searchParams?: IssueQuery
+  readonly pageSize: number
+  readonly currentPage: number
+  readonly issueCount: number
 }
 
 export default function IssuesPageCore({
   issues,
   searchParams,
+  pageSize,
+  currentPage,
+  issueCount,
 }: IssuesPageCoreProps) {
   const columns: {label: string; value: keyof Issue; className?: string}[] = [
     {label: 'Issue', value: 'title'},
@@ -89,6 +96,11 @@ export default function IssuesPageCore({
           ))}
         </Table.Body>
       </Table.Root>
+      <Pagination
+        pageSize={pageSize}
+        currentPage={currentPage}
+        itemCount={issueCount}
+      />
     </div>
   )
 }

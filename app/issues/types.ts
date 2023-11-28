@@ -6,4 +6,5 @@ export type IssueQuery = {
   status: Status
   orderBy: keyof Issue
   orderDirection: 'asc' | 'desc'
+  page: string
 }

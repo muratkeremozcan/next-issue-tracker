@@ -33,11 +33,28 @@ export default async function IssuesPage({searchParams}: IssuesPageProps) {
     ? {[searchParams.orderBy]: orderDirection}
     : {}
 
+  const currentPage = parseInt(searchParams.page) || 1
+  const pageSize = 10
+  const where = {status}
+
   // @ts-expect-error zod to prisma
   const issues: Issue[] = await prisma.issue.findMany({
-    where: {status},
+    where,
     orderBy,
+    skip: (currentPage - 1) * pageSize,
+    take: pageSize,
   })
 
-  return <IssuesPageCore issues={issues} searchParams={searchParams} />
+  // need the total number of issues for pagination component
+  const issueCount = await prisma.issue.count({where})
+
+  return (
+    <IssuesPageCore
+      issues={issues}
+      searchParams={searchParams}
+      pageSize={pageSize}
+      currentPage={currentPage}
+      issueCount={issueCount}
+    />
+  )
 }
