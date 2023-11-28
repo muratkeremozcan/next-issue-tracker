@@ -1,33 +1,19 @@
 import type {Issue} from '@/app/api/issues/schema'
 import {IssueStatusBadge, Link} from '@/app/components'
+import {ArrowDownIcon, ArrowUpIcon} from '@radix-ui/react-icons'
 import {Table} from '@radix-ui/themes'
 import NextLink from 'next/link'
-import IssueActions from '../_components/IssueActions'
 import type {IssueQuery} from '../types'
-import {ArrowDownIcon, ArrowUpIcon} from '@radix-ui/react-icons'
-import Pagination from '@/app/components/Pagination'
 
 type IssuesPageCoreProps = {
   readonly issues: Issue[]
   readonly searchParams?: IssueQuery
-  readonly pageSize: number
-  readonly currentPage: number
-  readonly issueCount: number
 }
 
 export default function IssuesPageCore({
   issues,
   searchParams,
-  pageSize,
-  currentPage,
-  issueCount,
 }: IssuesPageCoreProps) {
-  const columns: {label: string; value: keyof Issue; className?: string}[] = [
-    {label: 'Issue', value: 'title'},
-    {label: 'Status', value: 'status', className: 'hidden md:table-cell'},
-    {label: 'Created', value: 'createdAt', className: 'hidden md:table-cell'},
-  ]
-
   const handleColumnClick = (columnValue: keyof Issue) => ({
     ...searchParams,
     orderBy: columnValue,
@@ -41,7 +27,6 @@ export default function IssuesPageCore({
 
   return (
     <div data-cy="issues-page-core-comp">
-      <IssueActions />
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
@@ -96,11 +81,12 @@ export default function IssuesPageCore({
           ))}
         </Table.Body>
       </Table.Root>
-      <Pagination
-        pageSize={pageSize}
-        currentPage={currentPage}
-        itemCount={issueCount}
-      />
     </div>
   )
 }
+
+const columns: {label: string; value: keyof Issue; className?: string}[] = [
+  {label: 'Issue', value: 'title'},
+  {label: 'Status', value: 'status', className: 'hidden md:table-cell'},
+  {label: 'Created', value: 'createdAt', className: 'hidden md:table-cell'},
+]

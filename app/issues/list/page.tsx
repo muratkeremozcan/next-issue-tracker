@@ -1,7 +1,10 @@
+import Pagination from '@/app/components/Pagination'
 import {prisma} from '@/prisma/client'
-import IssuesPageCore from './pageIssuesPageCore'
 import type {Issue} from '../../api/issues/schema'
+import IssueActions from '../_components/IssueActions'
 import type {IssueQuery} from '../types'
+import IssuesPageCore from './pageIssuesPageCore'
+import {Flex} from '@radix-ui/themes'
 
 // server cache workaround to see issues we added / updated:
 // issues page is served from cache, that is why we do not see the new issue we add
@@ -49,12 +52,14 @@ export default async function IssuesPage({searchParams}: IssuesPageProps) {
   const issueCount = await prisma.issue.count({where})
 
   return (
-    <IssuesPageCore
-      issues={issues}
-      searchParams={searchParams}
-      pageSize={pageSize}
-      currentPage={currentPage}
-      issueCount={issueCount}
-    />
+    <Flex direction="column" gap="3">
+      <IssueActions />
+      <IssuesPageCore issues={issues} searchParams={searchParams} />
+      <Pagination
+        pageSize={pageSize}
+        currentPage={currentPage}
+        itemCount={issueCount}
+      />
+    </Flex>
   )
 }
