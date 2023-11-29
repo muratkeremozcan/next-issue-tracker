@@ -1,11 +1,18 @@
 [
   {
-    "id": 1,
+    "id": 11,
     "title": "Vero caste caste.",
     "description": "Artificiose deporto surgo cilicium alter depromo corporis. Solitudo accusamus tergo adsuesco brevis cultellus doloremque caelum aliquid. Vos vigilo absorbeo vereor cultura inflammatio vado cultura.",
     "status": "OPEN",
     "createdAt": "2023-11-01T14:21:00.282Z",
-    "updatedAt": "2023-11-01T14:21:00.282Z"
+    "updatedAt": "2023-11-01T14:21:00.282Z",
+    "assignedToUser": {
+      "id": "cloztwhu10000w7ay7fco2img",
+      "name": "Murat Ozcan",
+      "email": "next.app.mosh@gmail.com",
+      "emailVerified": null,
+      "image": "https://lh3.googleusercontent.com/a/ACg8ocLFX3ZmZsILarbdRhYk_ISWE2QjlIBZci1W3F6KemHy=s96-c"
+    }
   },
   {
     "id": 2,

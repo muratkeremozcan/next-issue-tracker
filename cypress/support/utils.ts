@@ -11,13 +11,24 @@ export const createRandomIssue = (): Issue => ({
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function transformIssueData(rawData: any[]): Issue[] {
   return rawData.map(
-    ({id, title, description, status, createdAt, updatedAt}) => ({
+    ({
+      id,
+      title,
+      description,
+      status,
+      createdAt,
+      updatedAt,
+      assignedToUser,
+      assignedToUserId,
+    }) => ({
       id,
       title,
       description,
       status: status,
       createdAt: new Date(createdAt),
       updatedAt: new Date(updatedAt),
+      assignedToUser,
+      assignedToUserId,
     }),
   )
 }

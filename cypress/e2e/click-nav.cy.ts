@@ -9,6 +9,7 @@ describe('navigation', () => {
     cy.visit('/')
     cy.contains('Dashboard').click()
     cy.location('pathname').should('equal', '/dashboard')
+    cy.contains('Latest Issues')
   })
 
   it('should nav to an issue', () => {

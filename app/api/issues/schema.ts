@@ -13,6 +13,16 @@ import {z} from 'zod'
 
 // export type Issue = z.infer<typeof IssueSchema>
 
+export const UserSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  email: z.string().email(),
+  emailVerified: z.date().nullable().optional(),
+  image: z.string(),
+})
+
+export type User = z.infer<typeof UserSchema>
+
 export const IssueSchema = z.object({
   id: z.number().optional(),
   title: z.string().min(1, 'Title is required.').max(255),
@@ -21,12 +31,7 @@ export const IssueSchema = z.object({
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
   assignedToUserId: z.string().optional(),
-  assignedToUser: z
-    .string()
-    .min(1, 'AssignedToUserId is required.')
-    .max(255)
-    .optional()
-    .nullable(),
+  assignedToUser: UserSchema.optional(),
 })
 
 export type Issue = z.infer<typeof IssueSchema>
