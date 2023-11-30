@@ -9,6 +9,7 @@ describe('navigation', () => {
     cy.visit('/')
     cy.getByCy('issue-summary-component').should('be.visible')
     cy.contains('Latest Issues')
+    cy.getByCy('issue-cart-comp').should('be.visible')
 
     cy.contains('Dashboard').click()
     cy.location('pathname').should('equal', '/dashboard')
