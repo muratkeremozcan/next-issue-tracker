@@ -54,6 +54,6 @@ describe('Edit an issue', () => {
     updateStatus('DONE')
     cy.contains('Done').should('be.visible')
 
-    // cy.deleteIssueBy({title: editedTitle})
+    cy.deleteIssueBy({title: editedTitle})
   })
 })
