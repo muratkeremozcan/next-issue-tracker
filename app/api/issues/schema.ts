@@ -23,6 +23,8 @@ export const UserSchema = z.object({
 
 export type User = z.infer<typeof UserSchema>
 
+export const statusOptions = ['OPEN', 'IN_PROGRESS', 'DONE']
+
 export const IssueSchema = z.object({
   id: z.number().optional(),
   title: z.string().min(1, 'Title is required.').max(255),
