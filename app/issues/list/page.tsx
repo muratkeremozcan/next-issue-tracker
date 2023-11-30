@@ -1,6 +1,6 @@
 import Pagination from '@/app/components/Pagination'
 import {prisma} from '@/prisma/client'
-import type {Issue} from '../../api/issues/schema'
+import {statusOptions, type Issue} from '../../api/issues/schema'
 import IssueActions from '../_components/IssueActions'
 import type {IssueQuery} from '../types'
 import IssuesPageCore from './pageIssuesPageCore'
@@ -18,7 +18,7 @@ type IssuesPageProps = {
 
 export default async function IssuesPage({searchParams}: IssuesPageProps) {
   // if an invalid issue is passed, we want prisma to return everything using undefined
-  const statuses = Object.values(['OPEN', 'IN_PROGRESS', 'DONE'])
+  const statuses = Object.values(statusOptions)
   const status = statuses.includes(searchParams.status)
     ? searchParams.status
     : undefined

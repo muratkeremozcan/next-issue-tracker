@@ -7,6 +7,7 @@ import EditIssueButton from './EditIssueButton'
 import IssueDetails from './IssueDetails'
 import DeleteIssueButton from './DeleteIssueButton'
 import AssigneeSelect from './AssigneeSelect'
+import StatusSelect from './StatusSelect'
 
 type IssueDetailPageCoreProps = {
   readonly issue: Issue
@@ -25,6 +26,7 @@ export default function IssueDetailPageCore({issue}: IssueDetailPageCoreProps) {
       <Box className="col-span-1">
         <Flex direction="column" gap="4">
           <AssigneeSelect issue={issue} />
+          <StatusSelect issue={issue} />
           <EditIssueButton issueId={issue.id!} />
           <DeleteIssueButton issueId={issue.id!} />
         </Flex>

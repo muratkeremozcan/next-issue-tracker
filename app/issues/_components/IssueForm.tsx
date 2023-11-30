@@ -59,8 +59,11 @@ export default function IssueForm({issue}: IssueFormProps) {
   const submitIssue = curry(async (issue: Issue | undefined, data: Issue) => {
     try {
       setIsSubmitting(true)
-      if (issue) await axios.put(`/api/issues/${issue.id}`, data)
-      else await axios.post('/api/issues', data)
+      // Include the current status in the payload if it's an existing issue
+      const payload = issue ? {...data, status: issue.status} : data
+
+      if (issue) await axios.put(`/api/issues/${issue.id}`, payload)
+      else await axios.post('/api/issues', payload)
 
       router.push('/issues/list')
 
