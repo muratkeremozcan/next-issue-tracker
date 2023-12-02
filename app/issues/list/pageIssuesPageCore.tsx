@@ -1,9 +1,12 @@
+'use client'
 import type {Issue} from '@/app/api/issues/schema'
 import {IssueStatusBadge, Link} from '@/app/components'
 import {ArrowDownIcon, ArrowUpIcon} from '@radix-ui/react-icons'
-import {Table} from '@radix-ui/themes'
+import {Flex, Table} from '@radix-ui/themes'
 import NextLink from 'next/link'
 import type {IssueQuery} from '../types'
+import {useState} from 'react'
+import SearchInput from '../_components/SearchInput'
 
 type IssuesPageCoreProps = {
   readonly issues: Issue[]
@@ -14,6 +17,19 @@ export default function IssuesPageCore({
   issues,
   searchParams,
 }: IssuesPageCoreProps) {
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const filteredIssues = issues.filter(issue => {
+    const issueIdStr = issue.id != null ? issue.id.toString() : ''
+    const searchTermStr = searchTerm.toString()
+
+    return (
+      issueIdStr.includes(searchTermStr) ||
+      issue.title.toLowerCase().includes(searchTermStr) ||
+      issue.description.toLowerCase().includes(searchTermStr)
+    )
+  })
+
   const handleColumnClick = (columnValue: keyof Issue) => ({
     ...searchParams,
     orderBy: columnValue,
@@ -26,7 +42,8 @@ export default function IssuesPageCore({
   })
 
   return (
-    <div data-cy="issues-page-core-comp">
+    <Flex direction="column" gap="2" data-cy="issues-page-core-comp">
+      <SearchInput onSearchChange={setSearchTerm} />
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
@@ -55,33 +72,39 @@ export default function IssuesPageCore({
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {issues.map(({id, title, status, createdAt}) => (
-            <Table.Row key={id} data-cy={`issue-row-${title}`}>
-              <Table.Cell data-cy="issue-title">
-                <Link data-cy={`issue-id-${id}`} href={`/issues/${id}`}>
-                  {title}
-                </Link>
-                <div className="block md:hidden">
+          {filteredIssues.length > 0 ? (
+            filteredIssues.map(({id, title, status, createdAt}) => (
+              <Table.Row key={id} data-cy={`issue-row-${title}`}>
+                <Table.Cell data-cy="issue-title">
+                  <Link data-cy={`issue-id-${id}`} href={`/issues/${id}`}>
+                    {title}
+                  </Link>
+                  <div className="block md:hidden">
+                    <IssueStatusBadge status={status} />
+                  </div>
+                </Table.Cell>
+                <Table.Cell
+                  data-cy="issue-status"
+                  className="hidden md:table-cell"
+                >
                   <IssueStatusBadge status={status} />
-                </div>
-              </Table.Cell>
-              <Table.Cell
-                data-cy="issue-status"
-                className="hidden md:table-cell"
-              >
-                <IssueStatusBadge status={status} />
-              </Table.Cell>
-              <Table.Cell
-                data-cy="issue-createdAt"
-                className="hidden md:table-cell"
-              >
-                {createdAt?.toDateString()}
-              </Table.Cell>
+                </Table.Cell>
+                <Table.Cell
+                  data-cy="issue-createdAt"
+                  className="hidden md:table-cell"
+                >
+                  {createdAt?.toDateString()}
+                </Table.Cell>
+              </Table.Row>
+            ))
+          ) : (
+            <Table.Row>
+              <Table.Cell colSpan={columns.length}>No issues found</Table.Cell>
             </Table.Row>
-          ))}
+          )}
         </Table.Body>
       </Table.Root>
-    </div>
+    </Flex>
   )
 }
 
