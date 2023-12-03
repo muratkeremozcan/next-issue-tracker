@@ -17,6 +17,7 @@ describe('navigation', () => {
 
   it('should nav to an issue', () => {
     cy.createIssue(body)
+    cy.getIssueBy({title}).should('exist')
     cy.visit('/')
     cy.contains('Issues').click()
     cy.location('pathname').should('equal', '/issues/list')
