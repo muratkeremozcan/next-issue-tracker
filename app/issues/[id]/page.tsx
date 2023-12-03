@@ -9,6 +9,13 @@ type IssueDetailPageProps = {
   readonly params: {id: string}
 }
 
+const findIssue = (id: string) =>
+  prisma.issue.findUnique({
+    where: {
+      id: parseInt(id),
+    },
+  })
+
 export default async function IssueDetailPage({params}: IssueDetailPageProps) {
   // securing the app (6.10)
   // for auth... but we can't get it work nicely with cy and next-auth, yet
@@ -20,12 +27,17 @@ export default async function IssueDetailPage({params}: IssueDetailPageProps) {
   const id = parseInt(params.id, 10)
   if (isNaN(id)) return notFound()
 
-  const issue = (await prisma.issue.findUnique({
-    where: {
-      id: parseInt(params.id),
-    },
-  })) as Issue
+  const issue = (await findIssue(params.id)) as Issue
 
   if (!issue) return notFound()
   return <IssueDetailPageCore issue={issue} />
+}
+
+export async function generateMetadata({params}: IssueDetailPageProps) {
+  const issue = (await findIssue(params.id)) as Issue
+
+  return {
+    title: `Issue Details - ${issue.title}`,
+    description: `Details of issue ${issue.id}`,
+  }
 }
