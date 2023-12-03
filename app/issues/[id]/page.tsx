@@ -2,6 +2,7 @@ import {prisma} from '@/prisma/client'
 import {notFound} from 'next/navigation'
 import IssueDetailPageCore from './pageIssueDetailPageCore'
 import type {Issue} from '@/app/api/issues/schema'
+import {cache} from 'react'
 // import {getServerSession} from 'next-auth'
 // import authOptions from '@/app/auth/authOptions'
 
@@ -9,12 +10,14 @@ type IssueDetailPageProps = {
   readonly params: {id: string}
 }
 
-const findIssue = (id: string) =>
+// we use 'cache' from react, so that the db calls aren't doubled
+const findIssue = cache((issueId: string) =>
   prisma.issue.findUnique({
     where: {
-      id: parseInt(id),
+      id: parseInt(issueId),
     },
-  })
+  }),
+)
 
 export default async function IssueDetailPage({params}: IssueDetailPageProps) {
   // securing the app (6.10)
