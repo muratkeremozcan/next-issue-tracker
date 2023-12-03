@@ -2,12 +2,22 @@ import {prisma} from '@/prisma/client'
 import {notFound} from 'next/navigation'
 import IssueDetailPageCore from './pageIssueDetailPageCore'
 import type {Issue} from '@/app/api/issues/schema'
+import {cache} from 'react'
 // import {getServerSession} from 'next-auth'
 // import authOptions from '@/app/auth/authOptions'
 
 type IssueDetailPageProps = {
   readonly params: {id: string}
 }
+
+// we use 'cache' from react, so that the db calls aren't doubled
+const findIssue = cache((issueId: string) =>
+  prisma.issue.findUnique({
+    where: {
+      id: parseInt(issueId),
+    },
+  }),
+)
 
 export default async function IssueDetailPage({params}: IssueDetailPageProps) {
   // securing the app (6.10)
@@ -20,12 +30,17 @@ export default async function IssueDetailPage({params}: IssueDetailPageProps) {
   const id = parseInt(params.id, 10)
   if (isNaN(id)) return notFound()
 
-  const issue = (await prisma.issue.findUnique({
-    where: {
-      id: parseInt(params.id),
-    },
-  })) as Issue
+  const issue = (await findIssue(params.id)) as Issue
 
   if (!issue) return notFound()
   return <IssueDetailPageCore issue={issue} />
+}
+
+export async function generateMetadata({params}: IssueDetailPageProps) {
+  const issue = (await findIssue(params.id)) as Issue
+
+  return {
+    title: `Issue Details - ${issue.title}`,
+    description: `Details of issue ${issue.id}`,
+  }
 }

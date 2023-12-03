@@ -5,6 +5,7 @@ import IssueActions from '../_components/IssueActions'
 import type {IssueQuery} from '../types'
 import IssuesPageCore from './pageIssuesPageCore'
 import {Flex} from '@radix-ui/themes'
+import type {Metadata} from 'next'
 
 // server cache workaround to see issues we added / updated:
 // issues page is served from cache, that is why we do not see the new issue we add
@@ -62,4 +63,9 @@ export default async function IssuesPage({searchParams}: IssuesPageProps) {
       />
     </Flex>
   )
+}
+
+export const metadata: Metadata = {
+  title: 'Issue Tracker - Issue List',
+  description: 'View project issues',
 }
